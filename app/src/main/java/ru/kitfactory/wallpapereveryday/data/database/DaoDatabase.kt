@@ -1,0 +1,16 @@
+package ru.kitfactory.wallpapereveryday.data.database
+
+import androidx.lifecycle.LiveData
+import androidx.room.*
+
+@Dao
+interface DaoDatabase {
+    @Query("SELECT * FROM wallpaper_table ORDER BY startDate ASC")
+    fun getWallpapers(): LiveData<List<LocalDbWallpaper>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertWallpaper(wallpaper: LocalDbWallpaper)
+
+    @Delete
+    suspend fun removePaint(wallpaper: LocalDbWallpaper)
+}

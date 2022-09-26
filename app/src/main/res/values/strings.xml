@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Wallpaper Every Day</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="wallpaper">Wallpaper</string>
+    <string name="apply_wallpaper">Apply wallpaper</string>
+    <string name="apply_home">Apply for Home Screen</string>
+    <string name="apply_lockscreen">Apply for Lock Screen</string>
+    <string name="apply_all">Apply for All Screen</string>
+</resources>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/listWallpaperFragment">
+    <fragment
+        android:id="@+id/listWallpaperFragment"
+        android:name="ru.kitfactory.wallpapereveryday.ui.listwallpaperfragment.ListWallpaperFragment"
+        android:label="fragment_list_wallpaper"
+        tools:layout="@layout/fragment_list_wallpaper" >
+        <action
+            android:id="@+id/action_listWallpaperFragment_to_wallpaperFragment"
+            app:destination="@id/wallpaperFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/wallpaperFragment"
+        android:name="ru.kitfactory.wallpapereveryday.ui.wallpaperfragment.WallpaperFragment"
+        android:label="fragment_wallpaper"
+        tools:layout="@layout/fragment_wallpaper" >
+        <action
+            android:id="@+id/action_wallpaperFragment_to_listWallpaperFragment"
+            app:destination="@id/listWallpaperFragment" />
+        <argument
+            android:name="selectedWallpaper"
+            app:argType="ru.kitfactory.wallpapereveryday.domain.Wallpaper" />
+    </fragment>
+</navigation>
