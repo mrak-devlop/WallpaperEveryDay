@@ -12,6 +12,6 @@ class ViewModelFactory @Inject constructor (private val repository: WallpaperRep
         if (modelClass.isAssignableFrom(ListWallpaperViewModel::class.java)) {
             return ListWallpaperViewModel(repository) as T
         }
-        throw IllegalArgumentException("Unable to construct viewmodel")
+        throw IllegalArgumentException("Unable to construct view-model")
     }
 }

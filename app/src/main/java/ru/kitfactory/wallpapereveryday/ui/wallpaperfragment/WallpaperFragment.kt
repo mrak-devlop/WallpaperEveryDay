@@ -3,6 +3,8 @@ package ru.kitfactory.wallpapereveryday.ui.wallpaperfragment
 import android.app.WallpaperManager
 import android.app.WallpaperManager.FLAG_LOCK
 import android.app.WallpaperManager.FLAG_SYSTEM
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,6 +14,7 @@ import androidx.core.graphics.drawable.toBitmap
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import ru.kitfactory.wallpapereveryday.R
 import ru.kitfactory.wallpapereveryday.databinding.FragmentWallpaperBinding
 
@@ -33,9 +36,11 @@ class WallpaperFragment : Fragment() {
         val wallpaper = wallpaperFromArgs.selectedWallpaper
         Glide
             .with(view)
-            .load(wallpaper.url).diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+            .load(wallpaper.url)
+            .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
             .centerCrop()
-            .placeholder(R.drawable.th)
+            .placeholder(ColorDrawable(Color.BLACK))
+            .transition(DrawableTransitionOptions.withCrossFade())
             .into(image)
 
         val copyright = binding.copyrightView
@@ -96,6 +101,7 @@ class WallpaperFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        Glide.get(this.binding.root.context).clearMemory()
         _binding = null
     }
 

@@ -14,6 +14,7 @@ import androidx.work.Constraints
 import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
+import com.bumptech.glide.Glide
 import ru.kitfactory.wallpapereveryday.App
 import ru.kitfactory.wallpapereveryday.data.storage.PersistentStorage
 import ru.kitfactory.wallpapereveryday.databinding.FragmentListWallpaperBinding
@@ -52,7 +53,7 @@ class ListWallpaperFragment : Fragment() {
         else{
             recyclerView.layoutManager = GridLayoutManager(requireContext(), 5)
         }
-        wallpaper.observe(viewLifecycleOwner,{item -> adapter.setData(item)})
+        wallpaper.observe(viewLifecycleOwner) { item -> adapter.setData(item) }
         checkFirstRun()
         return view
     }
@@ -77,6 +78,7 @@ class ListWallpaperFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        Glide.get(this.binding.root.context).clearMemory()
         _binding = null
     }
 

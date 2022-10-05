@@ -21,11 +21,4 @@ class ListWallpaperViewModel(private val repository: WallpaperRepository) : View
 
     }
 
-    fun loadToDayWallpaperInDb() {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.addNewWallpaper("0")
-        }
-    }
-
-
 }

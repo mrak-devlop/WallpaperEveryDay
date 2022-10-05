@@ -8,5 +8,5 @@ object BingNetwork {
         .baseUrl("https://bing.biturl.top")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
-    val bing = retrofit.create(BingService::class.java)
+    val bing: BingService = retrofit.create(BingService::class.java)
 }
