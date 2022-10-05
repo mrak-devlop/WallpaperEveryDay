@@ -27,6 +27,7 @@ class ListWallpaperAdapter : RecyclerView.Adapter<ListWallpaperAdapter.ViewHolde
         return ViewHolder(binding)
     }
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val wallpaper = listWallpaper[position]
         val textDate = holder.binding.dateTextView
