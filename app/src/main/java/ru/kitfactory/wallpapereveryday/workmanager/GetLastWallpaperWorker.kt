@@ -27,6 +27,7 @@ class GetLastWallpaperWorker @AssistedInject constructor (
         try {
             repository.addNewWallpaper(LAST_WALLPAPER)
             Log.i("worker_log", "success")
+
             Result.success()
         }
         catch (e: Exception){

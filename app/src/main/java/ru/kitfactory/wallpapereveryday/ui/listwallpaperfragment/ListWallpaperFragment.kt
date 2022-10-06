@@ -16,7 +16,7 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.bumptech.glide.Glide
 import ru.kitfactory.wallpapereveryday.App
-import ru.kitfactory.wallpapereveryday.data.storage.PersistentStorage
+import ru.kitfactory.wallpapereveryday.data.storage.PreferencesStorage
 import ru.kitfactory.wallpapereveryday.databinding.FragmentListWallpaperBinding
 import ru.kitfactory.wallpapereveryday.viewmodels.ListWallpaperViewModel
 import ru.kitfactory.wallpapereveryday.di.factory.ViewModelFactory
@@ -35,7 +35,7 @@ class ListWallpaperFragment : Fragment() {
         ViewModelProvider(this, vmFactory)[ListWallpaperViewModel::class.java]
     }
     @Inject
-    lateinit var storage: PersistentStorage
+    lateinit var storage: PreferencesStorage
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

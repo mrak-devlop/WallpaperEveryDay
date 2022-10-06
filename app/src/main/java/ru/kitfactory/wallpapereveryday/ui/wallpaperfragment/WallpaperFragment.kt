@@ -87,7 +87,7 @@ class WallpaperFragment : Fragment() {
         }
 
         applyHomeFab.setOnClickListener{
-            FLAG_SYSTEM
+
             manager.setBitmap(
                 image.drawable.toBitmap(),
                 null,
@@ -101,7 +101,7 @@ class WallpaperFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Glide.get(this.binding.root.context).clearMemory()
+        Glide.get(this.binding.root.context).clearMemory();
         _binding = null
     }
 

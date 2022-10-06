@@ -6,7 +6,7 @@ import dagger.Module
 import dagger.Provides
 import ru.kitfactory.wallpapereveryday.data.database.LocalDatabase
 import ru.kitfactory.wallpapereveryday.data.repository.WallpaperRepository
-import ru.kitfactory.wallpapereveryday.data.storage.PersistentStorage
+import ru.kitfactory.wallpapereveryday.data.storage.PreferencesStorage
 import javax.inject.Singleton
 
 @Module
@@ -29,7 +29,7 @@ class DataModule(application: Application) {
         return WallpaperRepository(database = database)
     }
     @Provides
-    fun providePersistentStorage(): PersistentStorage {
-        return PersistentStorage(mainApplication)
+    fun providePreferencesStorage(): PreferencesStorage {
+        return PreferencesStorage(mainApplication)
     }
 }

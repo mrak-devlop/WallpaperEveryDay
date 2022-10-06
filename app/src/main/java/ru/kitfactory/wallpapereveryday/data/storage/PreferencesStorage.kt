@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 
 const val STORAGE_NAME = "Storage"
 
-class PersistentStorage(context: Context) {
+class PreferencesStorage(context: Context) {
     private val settings: SharedPreferences = context
         .getSharedPreferences(STORAGE_NAME, Context.MODE_PRIVATE)
     private val editor: SharedPreferences.Editor = settings.edit()
