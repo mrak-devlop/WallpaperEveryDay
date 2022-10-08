@@ -20,5 +20,4 @@ class ListWallpaperViewModel(private val repository: WallpaperRepository) : View
         }
 
     }
-
 }

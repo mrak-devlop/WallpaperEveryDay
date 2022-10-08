@@ -2,34 +2,34 @@ package ru.kitfactory.wallpapereveryday.util
 
 import android.app.WallpaperManager
 import android.content.Context
+import android.graphics.Bitmap
 import android.widget.ImageView
 import androidx.core.graphics.drawable.toBitmap
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class SetWallpaper(context: Context, imageView: ImageView) {
+class SetWallpaper(context: Context) {
     private val manager = WallpaperManager.getInstance(context)
-    private val image = imageView
 
-    suspend fun applyForAllScreen(){
+    suspend fun applyForAllScreen(bitmap: Bitmap){
         withContext(Dispatchers.IO) {
-            manager.setBitmap(image.drawable.toBitmap())
+            manager.setBitmap(bitmap)
         }
     }
-    suspend fun applyForLockScreen(){
+    suspend fun applyForLockScreen(bitmap: Bitmap){
         withContext(Dispatchers.IO) {
         manager.setBitmap(
-            image.drawable.toBitmap(),
+            bitmap,
             null,
             false,
             WallpaperManager.FLAG_LOCK
         )
         }
     }
-    suspend fun applyForHomeScreen(){
+    suspend fun applyForHomeScreen(bitmap: Bitmap){
         withContext(Dispatchers.IO) {
         manager.setBitmap(
-            image.drawable.toBitmap(),
+            bitmap,
             null,
             false,
             WallpaperManager.FLAG_SYSTEM

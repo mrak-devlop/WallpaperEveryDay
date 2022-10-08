@@ -12,6 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.kitfactory.wallpapereveryday.di.AppComponent
 import ru.kitfactory.wallpapereveryday.di.factory.GetLastWallpaperWorkerFactory
+import ru.kitfactory.wallpapereveryday.di.module.AppModule
 import ru.kitfactory.wallpapereveryday.di.module.DataModule
 import ru.kitfactory.wallpapereveryday.workmanager.GetLastWallpaperWorker
 import java.util.concurrent.TimeUnit
@@ -30,7 +31,7 @@ lateinit var getLastWallpaperWorkerFactory: GetLastWallpaperWorkerFactory
         instance = this
         appComponent = DaggerAppComponent
             .builder()
-            .dataModule(DataModule(this))
+            .appModule(AppModule(this))
             .build()
         appComponent.injectTo(this)
         val workManagerConfig = Configuration
@@ -43,16 +44,15 @@ lateinit var getLastWallpaperWorkerFactory: GetLastWallpaperWorkerFactory
     }
 
     private fun delayedInit() = applicationScope.launch {
-        Log.i("worker_log", "applicationScope run")
         scheduleGetLastWallpaper()
     }
 
     private fun scheduleGetLastWallpaper() {
         val repeatRequest =
             PeriodicWorkRequestBuilder<GetLastWallpaperWorker>(
-                16,
-                TimeUnit.MINUTES,
-                1,
+                6,
+                TimeUnit.HOURS,
+                30,
                 TimeUnit.MINUTES
             )
                 .setConstraints(makeConstraints())

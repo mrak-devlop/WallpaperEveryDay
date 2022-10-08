@@ -4,11 +4,12 @@ import dagger.Component
 import ru.kitfactory.wallpapereveryday.App
 import ru.kitfactory.wallpapereveryday.di.module.AppModule
 import ru.kitfactory.wallpapereveryday.di.module.DataModule
+import ru.kitfactory.wallpapereveryday.di.module.UtilModule
 import ru.kitfactory.wallpapereveryday.ui.listwallpaperfragment.ListWallpaperFragment
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [AppModule::class, DataModule::class])
+@Component(modules = [AppModule::class, DataModule::class, UtilModule::class])
 interface AppComponent {
     fun inject(listWallpaperFragment: ListWallpaperFragment)
     fun injectTo(application: App)

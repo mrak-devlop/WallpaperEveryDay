@@ -10,14 +10,13 @@ import ru.kitfactory.wallpapereveryday.data.storage.PreferencesStorage
 import javax.inject.Singleton
 
 @Module
-class DataModule(application: Application) {
-    private val mainApplication = application
+class DataModule() {
     private lateinit var database: LocalDatabase
     @Singleton
     @Provides
-    fun provideLocalDatabase(): LocalDatabase {
+    fun provideLocalDatabase(application: Application): LocalDatabase {
         database = Room
-            .databaseBuilder(mainApplication,
+            .databaseBuilder(application,
                 LocalDatabase::class.java,
                 "wallpaper_database")
             .build()
@@ -29,7 +28,7 @@ class DataModule(application: Application) {
         return WallpaperRepository(database = database)
     }
     @Provides
-    fun providePreferencesStorage(): PreferencesStorage {
-        return PreferencesStorage(mainApplication)
+    fun providePreferencesStorage(application: Application): PreferencesStorage {
+        return PreferencesStorage(application)
     }
 }

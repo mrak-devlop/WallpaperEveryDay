@@ -12,10 +12,14 @@ import com.bumptech.glide.request.RequestOptions
 import ru.kitfactory.wallpapereveryday.R
 import ru.kitfactory.wallpapereveryday.databinding.ItemForListWallpaperBinding
 import ru.kitfactory.wallpapereveryday.domain.Wallpaper
+import ru.kitfactory.wallpapereveryday.util.InternetConnection
+import javax.inject.Inject
 
 
 class ListWallpaperAdapter : RecyclerView.Adapter<ListWallpaperAdapter.ViewHolder>() {
     private var listWallpaper = emptyList<Wallpaper>()
+    @Inject
+    lateinit var internetConnection: InternetConnection
 
     inner class ViewHolder(val binding: ItemForListWallpaperBinding) : RecyclerView
     .ViewHolder(binding.root)

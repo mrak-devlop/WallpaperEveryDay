@@ -1,8 +1,5 @@
 package ru.kitfactory.wallpapereveryday.ui.wallpaperfragment
 
-import android.app.WallpaperManager
-import android.app.WallpaperManager.FLAG_LOCK
-import android.app.WallpaperManager.FLAG_SYSTEM
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -15,8 +12,12 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import ru.kitfactory.wallpapereveryday.R
 import ru.kitfactory.wallpapereveryday.databinding.FragmentWallpaperBinding
+import ru.kitfactory.wallpapereveryday.util.SetWallpaper
 
 
 class WallpaperFragment : Fragment() {
@@ -25,7 +26,6 @@ class WallpaperFragment : Fragment() {
     private var _binding: FragmentWallpaperBinding? = null
     private val binding get() = _binding!!
     private var isAllFabsVisible = false
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -72,27 +72,25 @@ class WallpaperFragment : Fragment() {
             }
         }
 
-        val manager = WallpaperManager.getInstance(this.context)
+        val setWallpaper = this.context?.let { SetWallpaper(it) }
         applyAllFab.setOnClickListener {
-            manager.setBitmap(image.drawable.toBitmap())
+
+            CoroutineScope(Dispatchers.IO).launch {
+                setWallpaper?.applyForAllScreen(image.drawable.toBitmap())
+            }
         }
 
         applyLockscreenFab.setOnClickListener{
-
-            manager.setBitmap(
-                image.drawable.toBitmap(),
-                null,
-                false,
-                FLAG_LOCK)
+            CoroutineScope(Dispatchers.IO).launch {
+                setWallpaper?.applyForLockScreen(image.drawable.toBitmap())
+            }
         }
 
         applyHomeFab.setOnClickListener{
 
-            manager.setBitmap(
-                image.drawable.toBitmap(),
-                null,
-                false,
-                FLAG_SYSTEM)
+            CoroutineScope(Dispatchers.IO).launch {
+                setWallpaper?.applyForHomeScreen(image.drawable.toBitmap())
+            }
         }
 
         return view
@@ -101,7 +99,7 @@ class WallpaperFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Glide.get(this.binding.root.context).clearMemory();
+        Glide.get(this.binding.root.context).clearMemory()
         _binding = null
     }
 
