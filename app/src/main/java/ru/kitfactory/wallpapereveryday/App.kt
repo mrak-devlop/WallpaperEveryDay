@@ -5,7 +5,6 @@ import javax.inject.Inject
 
 
 import android.app.Application
-import android.util.Log
 import androidx.work.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -13,7 +12,6 @@ import kotlinx.coroutines.launch
 import ru.kitfactory.wallpapereveryday.di.AppComponent
 import ru.kitfactory.wallpapereveryday.di.factory.GetLastWallpaperWorkerFactory
 import ru.kitfactory.wallpapereveryday.di.module.AppModule
-import ru.kitfactory.wallpapereveryday.di.module.DataModule
 import ru.kitfactory.wallpapereveryday.workmanager.GetLastWallpaperWorker
 import java.util.concurrent.TimeUnit
 
@@ -50,9 +48,9 @@ lateinit var getLastWallpaperWorkerFactory: GetLastWallpaperWorkerFactory
     private fun scheduleGetLastWallpaper() {
         val repeatRequest =
             PeriodicWorkRequestBuilder<GetLastWallpaperWorker>(
-                6,
-                TimeUnit.HOURS,
-                30,
+                15,
+                TimeUnit.MINUTES,
+                1,
                 TimeUnit.MINUTES
             )
                 .setConstraints(makeConstraints())
