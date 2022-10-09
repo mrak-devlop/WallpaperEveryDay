@@ -26,6 +26,7 @@ class WallpaperFragment : Fragment() {
     private var _binding: FragmentWallpaperBinding? = null
     private val binding get() = _binding!!
     private var isAllFabsVisible = false
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

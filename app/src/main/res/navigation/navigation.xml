@@ -12,6 +12,9 @@
         <action
             android:id="@+id/action_listWallpaperFragment_to_wallpaperFragment"
             app:destination="@id/wallpaperFragment" />
+        <action
+            android:id="@+id/action_listWallpaperFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/wallpaperFragment"
@@ -24,5 +27,14 @@
         <argument
             android:name="selectedWallpaper"
             app:argType="ru.kitfactory.wallpapereveryday.domain.Wallpaper" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="ru.kitfactory.wallpapereveryday.ui.settingsFragment.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_settingsFragment_to_listWallpaperFragment"
+            app:destination="@id/listWallpaperFragment" />
     </fragment>
 </navigation>
