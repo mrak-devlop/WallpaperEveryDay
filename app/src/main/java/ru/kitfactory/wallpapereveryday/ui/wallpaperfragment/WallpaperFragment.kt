@@ -3,11 +3,11 @@ package ru.kitfactory.wallpapereveryday.ui.wallpaperfragment
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.graphics.drawable.toBitmap
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -22,7 +22,7 @@ import ru.kitfactory.wallpapereveryday.util.SetWallpaper
 
 class WallpaperFragment : Fragment() {
 
-    private val wallpaperFromArgs  by navArgs<WallpaperFragmentArgs>()
+    private val wallpaperFromArgs by navArgs<WallpaperFragmentArgs>()
     private var _binding: FragmentWallpaperBinding? = null
     private val binding get() = _binding!!
     private var isAllFabsVisible = false
@@ -81,13 +81,13 @@ class WallpaperFragment : Fragment() {
             }
         }
 
-        applyLockscreenFab.setOnClickListener{
+        applyLockscreenFab.setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {
                 setWallpaper?.applyForLockScreen(image.drawable.toBitmap())
             }
         }
 
-        applyHomeFab.setOnClickListener{
+        applyHomeFab.setOnClickListener {
 
             CoroutineScope(Dispatchers.IO).launch {
                 setWallpaper?.applyForHomeScreen(image.drawable.toBitmap())

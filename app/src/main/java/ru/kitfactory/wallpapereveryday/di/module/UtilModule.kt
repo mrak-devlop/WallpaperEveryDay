@@ -10,12 +10,13 @@ import javax.inject.Singleton
 @Module
 class UtilModule {
     @Provides
-    fun provideSetWallpaper(application: Application): SetWallpaper{
-        return SetWallpaper(application)
+    fun provideSetWallpaper(application: Application): SetWallpaper {
+        return SetWallpaper(application.applicationContext)
     }
+
     @Singleton
     @Provides
-    fun provideInternetConnection(application: Application) : InternetConnection {
+    fun provideInternetConnection(application: Application): InternetConnection {
         return InternetConnection(application)
     }
 }

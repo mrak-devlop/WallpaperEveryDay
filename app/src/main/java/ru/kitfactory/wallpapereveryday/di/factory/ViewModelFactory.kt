@@ -7,7 +7,8 @@ import ru.kitfactory.wallpapereveryday.viewmodels.ListWallpaperViewModel
 import javax.inject.Inject
 
 @Suppress("UNCHECKED_CAST")
-class ViewModelFactory @Inject constructor (private val repository: WallpaperRepository) : ViewModelProvider.Factory {
+class ViewModelFactory @Inject constructor(private val repository: WallpaperRepository) :
+    ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ListWallpaperViewModel::class.java)) {
             return ListWallpaperViewModel(repository) as T

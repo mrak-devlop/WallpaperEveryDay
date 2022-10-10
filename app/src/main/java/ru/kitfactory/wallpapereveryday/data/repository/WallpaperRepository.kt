@@ -26,9 +26,9 @@ class WallpaperRepository(private val database: LocalDatabase) {
         withContext(Dispatchers.IO) {
             val newWallpaper = BingNetwork.bing.fetchBingItem(
                 "?resolution=1920" +
-                "&format=json" +
-                "&index=$index" +
-                "&mkt=en-US"
+                        "&format=json" +
+                        "&index=$index" +
+                        "&mkt=en-US"
             )
             database.daoDatabase.insertWallpaper(
                 NetDataTransfer().bingWallpaperToDatabaseModel(newWallpaper)
@@ -37,11 +37,11 @@ class WallpaperRepository(private val database: LocalDatabase) {
         }
     }
 
-    fun getPreferencesStorage(context: Context) : PreferencesStorage{
+    fun getPreferencesStorage(context: Context): PreferencesStorage {
         return PreferencesStorage(context)
     }
 
-    fun getLastWallpaper(startDate: String):Wallpaper{
+    fun getLastWallpaper(startDate: String): Wallpaper {
         val dbWallpaper = database.daoDatabase.getLastWallpaper(startDate)
         return dbWallpaperToDomainModel(dbWallpaper)
     }

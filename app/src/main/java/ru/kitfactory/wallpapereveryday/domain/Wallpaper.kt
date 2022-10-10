@@ -12,4 +12,4 @@ data class Wallpaper(
     val endDate: String,
     val startDate: String,
     val url: String
-): Parcelable
+) : Parcelable

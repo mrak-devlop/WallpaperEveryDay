@@ -18,8 +18,8 @@ import com.bumptech.glide.Glide
 import ru.kitfactory.wallpapereveryday.App
 import ru.kitfactory.wallpapereveryday.data.storage.PreferencesStorage
 import ru.kitfactory.wallpapereveryday.databinding.FragmentListWallpaperBinding
-import ru.kitfactory.wallpapereveryday.viewmodels.ListWallpaperViewModel
 import ru.kitfactory.wallpapereveryday.di.factory.ViewModelFactory
+import ru.kitfactory.wallpapereveryday.viewmodels.ListWallpaperViewModel
 import ru.kitfactory.wallpapereveryday.workmanager.GetLastWallpaperWorker
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -29,11 +29,13 @@ class ListWallpaperFragment : Fragment() {
     private var _binding: FragmentListWallpaperBinding? = null
     private val binding get() = _binding!!
     private var myPreferences: SharedPreferences? = null
+
     @Inject
     lateinit var vmFactory: ViewModelFactory
     private val viewModel: ListWallpaperViewModel by lazy {
         ViewModelProvider(this, vmFactory)[ListWallpaperViewModel::class.java]
     }
+
     @Inject
     lateinit var storage: PreferencesStorage
 
@@ -47,10 +49,9 @@ class ListWallpaperFragment : Fragment() {
         val adapter = ListWallpaperAdapter()
         val recyclerView = binding.wallpaperRecyclerView
         recyclerView.adapter = adapter
-        if (isPortraitMode()){
-        recyclerView.layoutManager = GridLayoutManager(requireContext(), 3)
-        }
-        else{
+        if (isPortraitMode()) {
+            recyclerView.layoutManager = GridLayoutManager(requireContext(), 3)
+        } else {
             recyclerView.layoutManager = GridLayoutManager(requireContext(), 5)
         }
         wallpaper.observe(viewLifecycleOwner) { item -> adapter.setData(item) }
@@ -63,10 +64,12 @@ class ListWallpaperFragment : Fragment() {
         injectDagger()
         myPreferences = this.activity?.getSharedPreferences("settings", Context.MODE_PRIVATE)
         val constraints = Constraints.Builder()
-            .setRequiredNetworkType (NetworkType.CONNECTED)
+            .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
-        val work = PeriodicWorkRequestBuilder<GetLastWallpaperWorker>(12, TimeUnit.HOURS,
-            2, TimeUnit.HOURS)
+        val work = PeriodicWorkRequestBuilder<GetLastWallpaperWorker>(
+            12, TimeUnit.HOURS,
+            2, TimeUnit.HOURS
+        )
             .setConstraints(constraints).build()
         WorkManager.getInstance(App.instance).enqueue(work)
 
@@ -89,14 +92,13 @@ class ListWallpaperFragment : Fragment() {
         }
     }
 
-    private fun checkFirstRun(){
+    private fun checkFirstRun() {
         val state = storage.getProperty("FirstRun")
-        if (state == "none" ){
+        if (state == "none") {
             storage.addProperty("FirstRun", "NO")
             viewModel.loadWallpapersOnWeekInDb()
         }
     }
-
 
 
 }

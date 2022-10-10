@@ -12,21 +12,26 @@ import javax.inject.Singleton
 @Module
 class DataModule() {
     private lateinit var database: LocalDatabase
+
     @Singleton
     @Provides
     fun provideLocalDatabase(application: Application): LocalDatabase {
         database = Room
-            .databaseBuilder(application,
+            .databaseBuilder(
+                application,
                 LocalDatabase::class.java,
-                "wallpaper_database")
+                "wallpaper_database"
+            )
             .build()
         return database
     }
+
     @Singleton
     @Provides
     fun provideWallpaperRepository(database: LocalDatabase): WallpaperRepository {
         return WallpaperRepository(database = database)
     }
+
     @Provides
     fun providePreferencesStorage(application: Application): PreferencesStorage {
         return PreferencesStorage(application)

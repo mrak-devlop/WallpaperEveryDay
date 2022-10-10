@@ -18,6 +18,7 @@ import javax.inject.Inject
 
 class ListWallpaperAdapter : RecyclerView.Adapter<ListWallpaperAdapter.ViewHolder>() {
     private var listWallpaper = emptyList<Wallpaper>()
+
     @Inject
     lateinit var internetConnection: InternetConnection
 
@@ -37,15 +38,15 @@ class ListWallpaperAdapter : RecyclerView.Adapter<ListWallpaperAdapter.ViewHolde
         val textDate = holder.binding.dateTextView
         textDate.text = wallpaper.startDate
         val image = holder.binding.wallpaperImageView
-            Glide
-                .with(holder.binding.root)
-                .load(wallpaper.url)
-                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                .apply(RequestOptions().override(400, 600))
-                .centerCrop()
-                .placeholder(R.drawable.th)
-                .transition(withCrossFade())
-                .into(image)
+        Glide
+            .with(holder.binding.root)
+            .load(wallpaper.url)
+            .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+            .apply(RequestOptions().override(400, 600))
+            .centerCrop()
+            .placeholder(R.drawable.th)
+            .transition(withCrossFade())
+            .into(image)
         image.setOnClickListener {
             val directions = ListWallpaperFragmentDirections
                 .actionListWallpaperFragmentToWallpaperFragment(wallpaper)
@@ -56,11 +57,10 @@ class ListWallpaperAdapter : RecyclerView.Adapter<ListWallpaperAdapter.ViewHolde
     override fun getItemCount() = listWallpaper.size
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setData(item: List<Wallpaper>){
+    fun setData(item: List<Wallpaper>) {
         this.listWallpaper = item
         notifyDataSetChanged()
     }
-
 
 
 }

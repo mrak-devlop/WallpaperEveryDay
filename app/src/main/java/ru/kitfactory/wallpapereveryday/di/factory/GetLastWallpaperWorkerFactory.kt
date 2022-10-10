@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class GetLastWallpaperWorkerFactory @Inject constructor(
     private val getLastWallpaperWorkerFactory: GetLastWallpaperWorker.Factory
-    ): WorkerFactory() {
+) : WorkerFactory() {
     override fun createWorker(
         appContext: Context,
         workerClassName: String,
@@ -17,7 +17,7 @@ class GetLastWallpaperWorkerFactory @Inject constructor(
     ): ListenableWorker? {
         return when (workerClassName) {
             GetLastWallpaperWorker::class.java.name ->
-               getLastWallpaperWorkerFactory.create(appContext, workerParameters)
+                getLastWallpaperWorkerFactory.create(appContext, workerParameters)
             else -> null
         }
     }

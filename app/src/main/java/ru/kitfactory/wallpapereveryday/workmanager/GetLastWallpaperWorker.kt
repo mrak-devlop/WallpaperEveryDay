@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.bumptech.glide.*
+import com.bumptech.glide.Glide
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -16,15 +16,16 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 
-class GetLastWallpaperWorker @AssistedInject constructor (
+class GetLastWallpaperWorker @AssistedInject constructor(
     @Assisted private val context: Context,
     @Assisted private val workerParams: WorkerParameters,
     private val repository: WallpaperRepository,
 ) : CoroutineWorker(context, workerParams) {
-    companion object{
+    companion object {
         const val LAST_WALLPAPER = "0"
         const val WORK_NAME = "UPDATE_WALLPAPER"
     }
+
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         try {
             repository.addNewWallpaper(LAST_WALLPAPER)
@@ -43,8 +44,7 @@ class GetLastWallpaperWorker @AssistedInject constructor (
             SetWallpaper(context.applicationContext).applyForAllScreen(bitmap)
             Log.i("wallpaper_debug", "Success")
             Result.success()
-        }
-        catch (e: Exception){
+        } catch (e: Exception) {
             Log.i("wallpaper_debug", "Retry")
             Result.retry()
         }

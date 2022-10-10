@@ -7,8 +7,9 @@ import dagger.Provides
 @Module
 class AppModule(application: Application) {
     private val mainApplication = application
+
     @Provides
-    fun provideAppApplication():Application{
+    fun provideAppApplication(): Application {
         return mainApplication
     }
 }

@@ -31,10 +31,10 @@ class NetDataTransfer {
 
     }
 
-    private fun parseData(data:String):String {
+    private fun parseData(data: String): String {
         val inFormat = DateTimeFormatter.ofPattern("uuuuMMdd")
         val outFormat = DateTimeFormatter.ofPattern("dd.MM.uu")
-        return LocalDate.parse(data,inFormat).format(outFormat)
+        return LocalDate.parse(data, inFormat).format(outFormat)
     }
 
 

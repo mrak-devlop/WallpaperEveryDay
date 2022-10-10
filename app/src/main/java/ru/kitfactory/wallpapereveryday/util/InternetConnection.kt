@@ -3,13 +3,12 @@ package ru.kitfactory.wallpapereveryday.util
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import android.os.Build
 
 
 class InternetConnection(val context: Context) {
     fun checkInternet(): Boolean {
-    val connectivityManager = context
-        .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val connectivityManager = context
+            .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
         // Returns a Network object corresponding to
         // the currently active default data network.

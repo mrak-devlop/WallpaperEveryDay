@@ -2,7 +2,6 @@ package ru.kitfactory.wallpapereveryday.data.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import java.util.Date
 
 @Dao
 interface DaoDatabase {

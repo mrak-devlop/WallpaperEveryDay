@@ -10,12 +10,12 @@ class PreferencesStorage(context: Context) {
         .getSharedPreferences(STORAGE_NAME, Context.MODE_PRIVATE)
     private val editor: SharedPreferences.Editor = settings.edit()
 
-    fun addProperty(name: String, value: String){
+    fun addProperty(name: String, value: String) {
         editor.putString(name, value)
         editor.apply()
     }
 
-    fun getProperty(name: String): String{
+    fun getProperty(name: String): String {
         return settings.getString(name, "none").toString()
     }
 
