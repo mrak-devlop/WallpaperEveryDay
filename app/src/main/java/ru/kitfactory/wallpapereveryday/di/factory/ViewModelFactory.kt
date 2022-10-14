@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import ru.kitfactory.wallpapereveryday.data.repository.WallpaperRepository
 import ru.kitfactory.wallpapereveryday.viewmodels.ListWallpaperViewModel
+import ru.kitfactory.wallpapereveryday.viewmodels.SettingsViewModel
 import javax.inject.Inject
 
 @Suppress("UNCHECKED_CAST")
@@ -12,6 +13,9 @@ class ViewModelFactory @Inject constructor(private val repository: WallpaperRepo
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ListWallpaperViewModel::class.java)) {
             return ListWallpaperViewModel(repository) as T
+        }
+        if (modelClass.isAssignableFrom(SettingsViewModel::class.java)) {
+            return SettingsViewModel(repository) as T
         }
         throw IllegalArgumentException("Unable to construct view-model")
     }

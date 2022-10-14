@@ -4,24 +4,19 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.work.Constraints
-import androidx.work.NetworkType
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
 import com.bumptech.glide.Glide
 import ru.kitfactory.wallpapereveryday.App
+import ru.kitfactory.wallpapereveryday.R
 import ru.kitfactory.wallpapereveryday.data.storage.PreferencesStorage
 import ru.kitfactory.wallpapereveryday.databinding.FragmentListWallpaperBinding
 import ru.kitfactory.wallpapereveryday.di.factory.ViewModelFactory
 import ru.kitfactory.wallpapereveryday.viewmodels.ListWallpaperViewModel
-import ru.kitfactory.wallpapereveryday.workmanager.GetLastWallpaperWorker
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class ListWallpaperFragment : Fragment() {
@@ -56,6 +51,17 @@ class ListWallpaperFragment : Fragment() {
         }
         wallpaper.observe(viewLifecycleOwner) { item -> adapter.setData(item) }
         checkFirstRun()
+        binding.topAppBar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.toSettingsButton -> {
+                    val directions = ListWallpaperFragmentDirections
+                        .actionListWallpaperFragmentToSettingsFragment()
+                    findNavController().navigate(directions)
+                    true
+                }
+                else -> false
+            }
+        }
         return view
     }
 
@@ -63,17 +69,8 @@ class ListWallpaperFragment : Fragment() {
         super.onCreate(savedInstanceState)
         injectDagger()
         myPreferences = this.activity?.getSharedPreferences("settings", Context.MODE_PRIVATE)
-        val constraints = Constraints.Builder()
-            .setRequiredNetworkType(NetworkType.CONNECTED)
-            .build()
-        val work = PeriodicWorkRequestBuilder<GetLastWallpaperWorker>(
-            12, TimeUnit.HOURS,
-            2, TimeUnit.HOURS
-        )
-            .setConstraints(constraints).build()
-        WorkManager.getInstance(App.instance).enqueue(work)
-
     }
+
 
     private fun injectDagger() {
         App.instance.appComponent.inject(this)

@@ -7,4 +7,8 @@
     <string name="apply_home">Apply for Home Screen</string>
     <string name="apply_lockscreen">Apply for Lock Screen</string>
     <string name="apply_all">Apply for All Screen</string>
+    <string name="page_title_list">Wallpapers</string>
+    <string name="settings">Settings</string>
+    <string name="autoinstall_wallpaper">Install new wallpaper every day</string>
+    <string name="autodelete_wallpaper">Delete last weeks wallpaper</string>
 </resources>
