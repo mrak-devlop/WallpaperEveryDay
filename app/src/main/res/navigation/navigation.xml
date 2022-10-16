@@ -11,10 +11,12 @@
         tools:layout="@layout/fragment_list_wallpaper" >
         <action
             android:id="@+id/action_listWallpaperFragment_to_wallpaperFragment"
-            app:destination="@id/wallpaperFragment" />
+            app:destination="@id/wallpaperFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_listWallpaperFragment_to_settingsFragment"
-            app:destination="@id/settingsFragment" />
+            app:destination="@id/settingsFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/wallpaperFragment"
@@ -23,7 +25,9 @@
         tools:layout="@layout/fragment_wallpaper" >
         <action
             android:id="@+id/action_wallpaperFragment_to_listWallpaperFragment"
-            app:destination="@id/listWallpaperFragment" />
+            app:destination="@id/listWallpaperFragment"
+            app:popUpTo="@id/listWallpaperFragment"
+            app:popUpToInclusive="true" />
         <argument
             android:name="selectedWallpaper"
             app:argType="ru.kitfactory.wallpapereveryday.domain.Wallpaper" />
@@ -35,6 +39,8 @@
         tools:layout="@layout/fragment_settings" >
         <action
             android:id="@+id/action_settingsFragment_to_listWallpaperFragment"
-            app:destination="@id/listWallpaperFragment" />
+            app:destination="@id/listWallpaperFragment"
+            app:popUpTo="@id/listWallpaperFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>
