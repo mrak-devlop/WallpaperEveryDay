@@ -1,10 +1,7 @@
 package ru.kitfactory.wallpapereveryday.ui.listwallpaperfragment
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -23,7 +20,6 @@ class ListWallpaperFragment : Fragment() {
 
     private var _binding: FragmentListWallpaperBinding? = null
     private val binding get() = _binding!!
-    private var myPreferences: SharedPreferences? = null
 
     @Inject
     lateinit var vmFactory: ViewModelFactory
@@ -44,13 +40,15 @@ class ListWallpaperFragment : Fragment() {
         val adapter = ListWallpaperAdapter()
         val recyclerView = binding.wallpaperRecyclerView
         recyclerView.adapter = adapter
+        viewModel.checkFirstRun()
         if (isPortraitMode()) {
             recyclerView.layoutManager = GridLayoutManager(requireContext(), 3)
         } else {
             recyclerView.layoutManager = GridLayoutManager(requireContext(), 5)
         }
+
         wallpaper.observe(viewLifecycleOwner) { item -> adapter.setData(item) }
-        checkFirstRun()
+
         binding.topAppBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.toSettingsButton -> {
@@ -68,7 +66,6 @@ class ListWallpaperFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         injectDagger()
-        myPreferences = this.activity?.getSharedPreferences("settings", Context.MODE_PRIVATE)
     }
 
 
@@ -88,14 +85,5 @@ class ListWallpaperFragment : Fragment() {
             else -> false
         }
     }
-
-    private fun checkFirstRun() {
-        val state = storage.getProperty("FirstRun")
-        if (state == "none") {
-            storage.addProperty("FirstRun", "NO")
-            viewModel.loadWallpapersOnWeekInDb()
-        }
-    }
-
 
 }

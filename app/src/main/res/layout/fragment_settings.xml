@@ -41,6 +41,7 @@
                 android:orientation="vertical">
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/install_wallpaper_switch"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="4dp"
@@ -48,6 +49,7 @@
                     android:text="@string/autoinstall_wallpaper" />
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/delate_wallpaper_switch"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="4dp"

@@ -27,27 +27,30 @@ class GetLastWallpaperWorker @AssistedInject constructor(
     }
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
-        try {
-            repository.addNewWallpaper(LAST_WALLPAPER)
-            val date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM.uu"))
-            Log.i("wallpaper_debug", date.toString())
-            val wallpaper = repository.getLastWallpaper(date)
-            Log.i("wallpaper_debug", "Run Glide")
-            val bitmap = Glide
-                .with(context.applicationContext)
-                .asBitmap()
-                .centerCrop()
-                .load(wallpaper.url)
-                .submit()
-                .get()
-            Log.i("wallpaper_debug", "setWallpaper ")
-            SetWallpaper(context.applicationContext).applyForAllScreen(bitmap)
-            Log.i("wallpaper_debug", "Success")
-            Result.success()
-        } catch (e: Exception) {
-            Log.i("wallpaper_debug", "Retry")
-            Result.retry()
-        }
+            try {
+                repository.addNewWallpaper(LAST_WALLPAPER)
+                val date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM.uu"))
+                Log.i("wallpaper_debug", date.toString())
+                val wallpaper = repository.getLastWallpaper(date)
+                val installWallpaperSettings = repository.getPreferences(WORK_NAME).toBoolean()
+                if (installWallpaperSettings) {
+                    Log.i("wallpaper_debug", "Run Glide")
+                    val bitmap = Glide
+                        .with(context.applicationContext)
+                        .asBitmap()
+                        .centerCrop()
+                        .load(wallpaper.url)
+                        .submit()
+                        .get()
+                    Log.i("wallpaper_debug", "setWallpaper ")
+                    SetWallpaper(context.applicationContext).applyForAllScreen(bitmap)
+                }
+                Log.i("wallpaper_debug", "Success")
+                Result.success()
+            } catch (e: Exception) {
+                Log.i("wallpaper_debug", "Retry")
+                Result.retry()
+            }
     }
 
     @AssistedFactory

@@ -49,9 +49,9 @@ class App : Application() {
     private fun scheduleGetLastWallpaper() {
         val repeatRequest =
             PeriodicWorkRequestBuilder<GetLastWallpaperWorker>(
-                16,
+                30,
                 TimeUnit.MINUTES,
-                1,
+                5,
                 TimeUnit.MINUTES
             )
                 .setConstraints(makeConstraints())
