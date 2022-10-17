@@ -1,4 +1,4 @@
-package ru.kitfactory.wallpapereveryday.util
+package ru.kitfactory.wallpapereveryday.domain.usecase
 
 import android.content.Context
 import android.net.ConnectivityManager

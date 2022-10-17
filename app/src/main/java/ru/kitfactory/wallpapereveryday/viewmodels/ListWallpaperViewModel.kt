@@ -11,8 +11,8 @@ import ru.kitfactory.wallpapereveryday.domain.Wallpaper
 class ListWallpaperViewModel(private val repository: WallpaperRepository) : ViewModel() {
     companion object{
         private const val UPDATE_WALLPAPER = "UPDATE_WALLPAPER"
-        private const val DELETE_OLD = "delete_old"
-        private const val FIRST_RUN = "FirstRun"
+        private const val DELETE_OLD = "DELETE_OLD"
+        private const val FIRST_RUN = "FIRST_RUN"
     }
 
     val localWallpaper: LiveData<List<Wallpaper>> = repository.wallpapers

@@ -11,7 +11,7 @@ import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import ru.kitfactory.wallpapereveryday.data.repository.WallpaperRepository
-import ru.kitfactory.wallpapereveryday.util.SetWallpaper
+import ru.kitfactory.wallpapereveryday.domain.usecase.SetWallpaper
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -24,6 +24,10 @@ class GetLastWallpaperWorker @AssistedInject constructor(
     companion object {
         const val LAST_WALLPAPER = "0"
         const val WORK_NAME = "UPDATE_WALLPAPER"
+        private const val UPDATE_WALLPAPER_TYPE = "UPDATE_WALLPAPER_TYPE"
+        private const val ALL_SCREEN = "ALL"
+        private const val LOCK_SCREEN = "LOCK"
+        private const val HOME_SCREEN = "HOME"
     }
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
@@ -43,7 +47,14 @@ class GetLastWallpaperWorker @AssistedInject constructor(
                         .submit()
                         .get()
                     Log.i("wallpaper_debug", "setWallpaper ")
-                    SetWallpaper(context.applicationContext).applyForAllScreen(bitmap)
+                    when(repository.getPreferences(UPDATE_WALLPAPER_TYPE)){
+                        ALL_SCREEN -> SetWallpaper(context.applicationContext)
+                            .applyForAllScreen(bitmap)
+                        LOCK_SCREEN -> SetWallpaper(context.applicationContext)
+                            .applyForLockScreen(bitmap)
+                        HOME_SCREEN -> SetWallpaper(context.applicationContext)
+                            .applyForHomeScreen(bitmap)
+                    }
                 }
                 Log.i("wallpaper_debug", "Success")
                 Result.success()

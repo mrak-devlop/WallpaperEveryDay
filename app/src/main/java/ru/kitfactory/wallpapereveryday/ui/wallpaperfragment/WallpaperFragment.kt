@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -15,13 +16,23 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import ru.kitfactory.wallpapereveryday.App
 import ru.kitfactory.wallpapereveryday.R
 import ru.kitfactory.wallpapereveryday.databinding.FragmentWallpaperBinding
-import ru.kitfactory.wallpapereveryday.util.SetWallpaper
+import ru.kitfactory.wallpapereveryday.di.factory.ViewModelFactory
+import ru.kitfactory.wallpapereveryday.domain.usecase.SetWallpaper
+import ru.kitfactory.wallpapereveryday.viewmodels.WallpaperViewModel
+import javax.inject.Inject
 
 
 class WallpaperFragment : Fragment() {
-
+    @Inject
+    lateinit var setWallpaper : SetWallpaper
+    @Inject
+    lateinit var vmFactory : ViewModelFactory
+    private val viewModel: WallpaperViewModel by lazy {
+        ViewModelProvider(this, vmFactory)[WallpaperViewModel::class.java]
+    }
     private val wallpaperFromArgs by navArgs<WallpaperFragmentArgs>()
     private var _binding: FragmentWallpaperBinding? = null
     private val binding get() = _binding!!
@@ -73,28 +84,27 @@ class WallpaperFragment : Fragment() {
             }
         }
 
-        val setWallpaper = this.context?.let { SetWallpaper(it) }
         applyAllFab.setOnClickListener {
-
-            CoroutineScope(Dispatchers.IO).launch {
-                setWallpaper?.applyForAllScreen(image.drawable.toBitmap())
-            }
+            val bitmap = image.drawable.toBitmap()
+            viewModel.setWallpaperForAllScreen(bitmap)
         }
 
         applyLockscreenFab.setOnClickListener {
-            CoroutineScope(Dispatchers.IO).launch {
-                setWallpaper?.applyForLockScreen(image.drawable.toBitmap())
-            }
+            val bitmap = image.drawable.toBitmap()
+            viewModel.setWallpaperForLockScreen(bitmap)
         }
 
         applyHomeFab.setOnClickListener {
-
-            CoroutineScope(Dispatchers.IO).launch {
-                setWallpaper?.applyForHomeScreen(image.drawable.toBitmap())
-            }
+            val bitmap = image.drawable.toBitmap()
+            viewModel.setWallpaperForHomeScreen(bitmap)
         }
 
         return view
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        injectDagger()
     }
 
 
@@ -102,6 +112,10 @@ class WallpaperFragment : Fragment() {
         super.onDestroyView()
         Glide.get(this.binding.root.context).clearMemory()
         _binding = null
+    }
+
+    private fun injectDagger() {
+        App.instance.appComponent.inject(this)
     }
 
 }

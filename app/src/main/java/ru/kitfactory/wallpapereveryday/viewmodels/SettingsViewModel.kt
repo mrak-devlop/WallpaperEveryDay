@@ -7,7 +7,7 @@ class SettingsViewModel(private val repository: WallpaperRepository): ViewModel(
 
     companion object {
         private const val UPDATE_WALLPAPER = "UPDATE_WALLPAPER"
-        private const val DELETE_OLD = "delete_old"
+        private const val DELETE_OLD = "DELETE_OLD"
     }
 
     private fun loadSettings(name: String): String {
