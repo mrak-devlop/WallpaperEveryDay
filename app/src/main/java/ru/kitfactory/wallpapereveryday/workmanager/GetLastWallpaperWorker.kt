@@ -29,42 +29,51 @@ class GetLastWallpaperWorker @AssistedInject constructor(
         private const val LOCK_SCREEN = "LOCK"
         private const val HOME_SCREEN = "HOME"
         private const val DELETE_OLD = "DELETE_OLD"
+        private const val LAST_UPDATE = "UPDATE"
     }
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
             try {
-                repository.addNewWallpaper(LAST_WALLPAPER)
-                val date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM.uu"))
-                val wallpaper = repository.getLastWallpaper(date)
+                val lastUpdate = repository.getPreferences(LAST_UPDATE)
+                val date = LocalDateTime
+                    .now()
+                    .format(DateTimeFormatter.ofPattern("dd.MM.uu"))
 
-                val installWallpaperSettings = repository.getPreferences(WORK_NAME).toBoolean()
-                if (installWallpaperSettings) {
+                if (date != lastUpdate ) {
+                    repository.addNewWallpaper(LAST_WALLPAPER)
+                    val wallpaper = repository.getLastWallpaper(date)
 
-                    Log.i("wallpaper_debug", "Load Bitmap")
-                    val bitmap = Glide
-                        .with(context.applicationContext)
-                        .asBitmap()
-                        .centerCrop()
-                        .load(wallpaper.url)
-                        .submit()
-                        .get()
+                    val installWallpaperSettings = repository.getPreferences(WORK_NAME).toBoolean()
+                    if (installWallpaperSettings) {
 
-                    Log.i("wallpaper_debug", "Run setWallpaper ")
-                    when(repository.getPreferences(UPDATE_WALLPAPER_TYPE)){
-                        ALL_SCREEN -> SetWallpaper(context.applicationContext)
-                            .applyForAllScreen(bitmap)
-                        LOCK_SCREEN -> SetWallpaper(context.applicationContext)
-                            .applyForLockScreen(bitmap)
-                        HOME_SCREEN -> SetWallpaper(context.applicationContext)
-                            .applyForHomeScreen(bitmap)
+                        Log.i("wallpaper_debug", "Load Bitmap")
+                        val bitmap = Glide
+                            .with(context.applicationContext)
+                            .asBitmap()
+                            .centerCrop()
+                            .load(wallpaper.url)
+                            .submit()
+                            .get()
+
+                        Log.i("wallpaper_debug", "Run setWallpaper ")
+                        when (repository.getPreferences(UPDATE_WALLPAPER_TYPE)) {
+                            ALL_SCREEN -> SetWallpaper(context.applicationContext)
+                                .applyForAllScreen(bitmap)
+                            LOCK_SCREEN -> SetWallpaper(context.applicationContext)
+                                .applyForLockScreen(bitmap)
+                            HOME_SCREEN -> SetWallpaper(context.applicationContext)
+                                .applyForHomeScreen(bitmap)
+                        }
+
+                        repository.addPreferences(LAST_UPDATE, date)
                     }
-
-                    val deletePrefs = repository.getPreferences(DELETE_OLD).toBoolean()
-                    if (deletePrefs){
-                    DeleteOldImage(repository, date).execute()
-                    }
-
                 }
+
+                val deletePrefs = repository.getPreferences(DELETE_OLD).toBoolean()
+                if (deletePrefs) {
+                    DeleteOldImage(repository, date).execute()
+                }
+
                 Log.i("wallpaper_debug", "Success")
                 Result.success()
             } catch (e: Exception) {
