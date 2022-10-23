@@ -22,6 +22,19 @@ class WallpaperRepository(private val database: LocalDatabase,
         it.asDomainModel()
     }
 
+    suspend fun removeWallpaper(wallpaper: Wallpaper){
+        val databaseModel = domainModelToDatabaseModel(wallpaper)
+        database.daoDatabase.removeWallpaper(databaseModel)
+
+    }
+
+    suspend fun getListWallpaper(): List<Wallpaper> {
+        return database
+            .daoDatabase
+            .getListWallpaper()
+            .asDomainModel()
+    }
+
     suspend fun addNewWallpaper(index: String) {
         withContext(Dispatchers.IO) {
             val newWallpaper = BingNetwork.bing.fetchBingItem(
@@ -58,6 +71,17 @@ class WallpaperRepository(private val database: LocalDatabase,
             endDate = dbWallpaper.endDate,
             startDate = dbWallpaper.startDate,
             url = dbWallpaper.url
+        )
+
+    }
+
+    fun domainModelToDatabaseModel(wallpaper: Wallpaper): LocalDbWallpaper {
+        return LocalDbWallpaper(
+            copyright = wallpaper.copyright,
+            copyrightLink = wallpaper.copyrightLink,
+            endDate = wallpaper.endDate,
+            startDate = wallpaper.startDate,
+            url = wallpaper.url
         )
 
     }

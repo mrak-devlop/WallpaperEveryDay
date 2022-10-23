@@ -28,17 +28,19 @@ class GetLastWallpaperWorker @AssistedInject constructor(
         private const val ALL_SCREEN = "ALL"
         private const val LOCK_SCREEN = "LOCK"
         private const val HOME_SCREEN = "HOME"
+        private const val DELETE_OLD = "DELETE_OLD"
     }
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
             try {
                 repository.addNewWallpaper(LAST_WALLPAPER)
                 val date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM.uu"))
-                Log.i("wallpaper_debug", date.toString())
                 val wallpaper = repository.getLastWallpaper(date)
+
                 val installWallpaperSettings = repository.getPreferences(WORK_NAME).toBoolean()
                 if (installWallpaperSettings) {
-                    Log.i("wallpaper_debug", "Run Glide")
+
+                    Log.i("wallpaper_debug", "Load Bitmap")
                     val bitmap = Glide
                         .with(context.applicationContext)
                         .asBitmap()
@@ -46,7 +48,8 @@ class GetLastWallpaperWorker @AssistedInject constructor(
                         .load(wallpaper.url)
                         .submit()
                         .get()
-                    Log.i("wallpaper_debug", "setWallpaper ")
+
+                    Log.i("wallpaper_debug", "Run setWallpaper ")
                     when(repository.getPreferences(UPDATE_WALLPAPER_TYPE)){
                         ALL_SCREEN -> SetWallpaper(context.applicationContext)
                             .applyForAllScreen(bitmap)
@@ -55,6 +58,12 @@ class GetLastWallpaperWorker @AssistedInject constructor(
                         HOME_SCREEN -> SetWallpaper(context.applicationContext)
                             .applyForHomeScreen(bitmap)
                     }
+
+                    val deletePrefs = repository.getPreferences(DELETE_OLD).toBoolean()
+                    if (deletePrefs){
+                    DeleteOldImage(repository, date).execute()
+                    }
+
                 }
                 Log.i("wallpaper_debug", "Success")
                 Result.success()
@@ -63,6 +72,7 @@ class GetLastWallpaperWorker @AssistedInject constructor(
                 Result.retry()
             }
     }
+
 
     @AssistedFactory
     interface Factory {

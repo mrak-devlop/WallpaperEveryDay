@@ -30,14 +30,14 @@ class App : Application() {
         instance = this
         appComponent = DaggerAppComponent
             .builder()
-            .appModule(AppModule(this))
+            .appModule(AppModule(instance))
             .build()
-        appComponent.injectTo(this)
+        appComponent.injectTo(instance)
         val workManagerConfig = Configuration
             .Builder()
             .setWorkerFactory(getLastWallpaperWorkerFactory)
             .build()
-        WorkManager.initialize(this, workManagerConfig)
+        WorkManager.initialize(instance, workManagerConfig)
         delayedInit()
 
     }
@@ -49,14 +49,14 @@ class App : Application() {
     private fun scheduleGetLastWallpaper() {
         val repeatRequest =
             PeriodicWorkRequestBuilder<GetLastWallpaperWorker>(
-                30,
+                16,
                 TimeUnit.MINUTES,
                 5,
                 TimeUnit.MINUTES
             )
                 .setConstraints(makeConstraints())
                 .build()
-        WorkManager.getInstance(applicationContext).enqueueUniquePeriodicWork(
+        WorkManager.getInstance(instance.applicationContext).enqueueUniquePeriodicWork(
             GetLastWallpaperWorker.WORK_NAME, ExistingPeriodicWorkPolicy.KEEP, repeatRequest
         )
     }

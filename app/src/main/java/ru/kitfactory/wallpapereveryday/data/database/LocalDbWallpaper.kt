@@ -7,11 +7,11 @@ import ru.kitfactory.wallpapereveryday.domain.Wallpaper
 
 @Entity(tableName = "wallpaper_table")
 data class LocalDbWallpaper constructor(
-    var copyright: String,
+    val copyright: String,
     val copyrightLink: String,
     val endDate: String,
-    val startDate: String,
     @PrimaryKey
+    val startDate: String,
     val url: String
 )
 
