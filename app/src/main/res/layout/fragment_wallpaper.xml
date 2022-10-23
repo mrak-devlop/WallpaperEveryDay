@@ -26,11 +26,10 @@
         android:layout_gravity="end"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:contentDescription="@string/apply_wallpaper"
         android:src="@drawable/ic_baseline_expand_less_24"
-        app:fabSize="normal"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/apply_home_fab"
@@ -44,7 +43,9 @@
         app:layout_constraintBottom_toTopOf="@+id/fab_apply"
         app:layout_constraintEnd_toEndOf="@+id/fab_apply"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/fab_apply" />
+        app:layout_constraintStart_toStartOf="@+id/fab_apply"
+        app:showMotionSpec="@anim/fab_show_motion_spec"
+        app:hideMotionSpec="@anim/fab_hide_motion_spec"/>
 
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -58,7 +59,9 @@
         app:icon="@drawable/ic_baseline_mobile_screen_share_24"
         app:layout_constraintBottom_toTopOf="@+id/apply_home_fab"
         app:layout_constraintEnd_toEndOf="@+id/apply_home_fab"
-        app:layout_constraintStart_toStartOf="@+id/apply_home_fab" />
+        app:layout_constraintStart_toStartOf="@+id/apply_home_fab"
+        app:showMotionSpec="@anim/fab_show_motion_spec"
+        app:hideMotionSpec="@anim/fab_hide_motion_spec"/>
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/apply_all_fab"
@@ -71,7 +74,9 @@
         app:icon="@drawable/ic_baseline_offline_share_24"
         app:layout_constraintBottom_toTopOf="@+id/apply_lockscreen_fab"
         app:layout_constraintEnd_toEndOf="@+id/apply_lockscreen_fab"
-        app:layout_constraintStart_toStartOf="@+id/apply_lockscreen_fab" />
+        app:layout_constraintStart_toStartOf="@+id/apply_lockscreen_fab"
+        app:showMotionSpec="@anim/fab_show_motion_spec"
+        app:hideMotionSpec="@anim/fab_hide_motion_spec"/>
 
     <TextView
         android:id="@+id/copyrightView"
@@ -81,6 +86,8 @@
         android:padding="6dp"
         android:text="TextView"
         android:textColor="@color/white"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/imageWallpaper"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
