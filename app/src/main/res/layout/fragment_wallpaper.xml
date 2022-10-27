@@ -7,6 +7,8 @@
     android:layout_height="match_parent"
     tools:context=".ui.wallpaperfragment.WallpaperFragment">
 
+
+
     <ImageView
         android:id="@+id/imageWallpaper"
         android:layout_width="0dp"
@@ -84,12 +86,46 @@
         android:layout_height="wrap_content"
         android:background="@color/foreground_text"
         android:padding="6dp"
-        android:text="TextView"
+        android:text=""
         android:textColor="@color/white"
-        android:visibility="gone"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/imageWallpaper"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fitsSystemWindows="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/topAppBarWallpaper"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/foreground_text"
+                android:elevation="0dp"
+                app:titleTextColor = "@color/white"
+                app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
+                app:menu="@menu/top_app_bar_wallpaper"
+                app:navigationIconTint="@color/white" />
+
+
+        </com.google.android.material.appbar.AppBarLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

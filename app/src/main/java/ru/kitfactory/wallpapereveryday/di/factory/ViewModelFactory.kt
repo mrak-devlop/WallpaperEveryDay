@@ -3,7 +3,7 @@ package ru.kitfactory.wallpapereveryday.di.factory
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import ru.kitfactory.wallpapereveryday.data.repository.WallpaperRepository
-import ru.kitfactory.wallpapereveryday.domain.usecase.SetWallpaper
+import ru.kitfactory.wallpapereveryday.utility.SetWallpaper
 import ru.kitfactory.wallpapereveryday.viewmodels.ListWallpaperViewModel
 import ru.kitfactory.wallpapereveryday.viewmodels.SettingsViewModel
 import ru.kitfactory.wallpapereveryday.viewmodels.WallpaperViewModel
@@ -11,7 +11,8 @@ import javax.inject.Inject
 
 @Suppress("UNCHECKED_CAST")
 class ViewModelFactory @Inject constructor(private val repository: WallpaperRepository,
-                                           private val setWallpaper: SetWallpaper) :
+                                           private val setWallpaper: SetWallpaper
+) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ListWallpaperViewModel::class.java)) {

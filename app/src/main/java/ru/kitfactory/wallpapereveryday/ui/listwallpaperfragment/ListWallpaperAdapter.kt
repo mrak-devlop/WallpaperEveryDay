@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -12,7 +13,7 @@ import com.bumptech.glide.request.RequestOptions
 import ru.kitfactory.wallpapereveryday.R
 import ru.kitfactory.wallpapereveryday.databinding.ItemForListWallpaperBinding
 import ru.kitfactory.wallpapereveryday.domain.Wallpaper
-import ru.kitfactory.wallpapereveryday.domain.usecase.InternetConnection
+import ru.kitfactory.wallpapereveryday.utility.InternetConnection
 import javax.inject.Inject
 
 
@@ -24,7 +25,6 @@ class ListWallpaperAdapter : RecyclerView.Adapter<ListWallpaperAdapter.ViewHolde
 
     inner class ViewHolder(val binding: ItemForListWallpaperBinding) : RecyclerView
     .ViewHolder(binding.root)
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemForListWallpaperBinding
@@ -48,6 +48,9 @@ class ListWallpaperAdapter : RecyclerView.Adapter<ListWallpaperAdapter.ViewHolde
             .transition(withCrossFade())
             .into(image)
         image.setOnClickListener {
+//            val extras = FragmentNavigatorExtras(
+//                 to "shared_element_container"
+//            )
             val directions = ListWallpaperFragmentDirections
                 .actionListWallpaperFragmentToWallpaperFragment(wallpaper)
             holder.itemView.findNavController().navigate(directions)

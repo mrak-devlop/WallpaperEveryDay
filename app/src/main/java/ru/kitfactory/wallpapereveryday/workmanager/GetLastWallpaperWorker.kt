@@ -11,7 +11,7 @@ import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import ru.kitfactory.wallpapereveryday.data.repository.WallpaperRepository
-import ru.kitfactory.wallpapereveryday.domain.usecase.SetWallpaper
+import ru.kitfactory.wallpapereveryday.utility.SetWallpaper
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -64,14 +64,13 @@ class GetLastWallpaperWorker @AssistedInject constructor(
                             HOME_SCREEN -> SetWallpaper(context.applicationContext)
                                 .applyForHomeScreen(bitmap)
                         }
-
                         repository.addPreferences(LAST_UPDATE, date)
                     }
                 }
 
                 val deletePrefs = repository.getPreferences(DELETE_OLD).toBoolean()
                 if (deletePrefs) {
-                    DeleteOldImage(repository, date).execute()
+                    DeleteOldImage(repository).execute()
                 }
 
                 Log.i("wallpaper_debug", "Success")

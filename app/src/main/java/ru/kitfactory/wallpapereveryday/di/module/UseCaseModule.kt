@@ -3,8 +3,8 @@ package ru.kitfactory.wallpapereveryday.di.module
 import android.app.Application
 import dagger.Module
 import dagger.Provides
-import ru.kitfactory.wallpapereveryday.domain.usecase.InternetConnection
-import ru.kitfactory.wallpapereveryday.domain.usecase.SetWallpaper
+import ru.kitfactory.wallpapereveryday.utility.InternetConnection
+import ru.kitfactory.wallpapereveryday.utility.SetWallpaper
 import javax.inject.Singleton
 
 @Module

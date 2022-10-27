@@ -1,4 +1,4 @@
-package ru.kitfactory.wallpapereveryday.domain.usecase
+package ru.kitfactory.wallpapereveryday.utility
 
 import android.app.WallpaperManager
 import android.content.Context

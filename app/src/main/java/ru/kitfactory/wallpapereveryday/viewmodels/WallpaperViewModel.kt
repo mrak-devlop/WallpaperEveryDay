@@ -6,11 +6,13 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.kitfactory.wallpapereveryday.data.repository.WallpaperRepository
-import ru.kitfactory.wallpapereveryday.domain.usecase.SetWallpaper
+import ru.kitfactory.wallpapereveryday.utility.SetWallpaper
 
 class WallpaperViewModel(private val repository: WallpaperRepository,
-                         private val setWallpaper: SetWallpaper): ViewModel() {
+                         private val setWallpaper: SetWallpaper
+): ViewModel() {
     companion object {
+        private const val UPDATE_WALLPAPER = "UPDATE_WALLPAPER"
         private const val ALL_SCREEN = "ALL"
         private const val LOCK_SCREEN = "LOCK"
         private const val HOME_SCREEN = "HOME"
@@ -51,6 +53,9 @@ class WallpaperViewModel(private val repository: WallpaperRepository,
             setUpdateWallpaperForHomeScreen()
         }
 
+    }
+    fun setAutoUpdate() {
+        repository.addPreferences(UPDATE_WALLPAPER, "true")
     }
 
 }

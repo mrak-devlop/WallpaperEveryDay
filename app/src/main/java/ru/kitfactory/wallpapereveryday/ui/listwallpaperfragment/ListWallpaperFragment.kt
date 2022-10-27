@@ -1,6 +1,6 @@
 package ru.kitfactory.wallpapereveryday.ui.listwallpaperfragment
 
-import android.content.res.Configuration
+import android.content.Context
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -8,11 +8,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import ru.kitfactory.wallpapereveryday.App
 import ru.kitfactory.wallpapereveryday.R
 import ru.kitfactory.wallpapereveryday.data.storage.PreferencesStorage
 import ru.kitfactory.wallpapereveryday.databinding.FragmentListWallpaperBinding
 import ru.kitfactory.wallpapereveryday.di.factory.ViewModelFactory
+import ru.kitfactory.wallpapereveryday.utility.ScreenGrid
 import ru.kitfactory.wallpapereveryday.viewmodels.ListWallpaperViewModel
 import javax.inject.Inject
 
@@ -20,7 +22,6 @@ class ListWallpaperFragment : Fragment() {
 
     private var _binding: FragmentListWallpaperBinding? = null
     private val binding get() = _binding!!
-
     @Inject
     lateinit var vmFactory: ViewModelFactory
     private val viewModel: ListWallpaperViewModel by lazy {
@@ -41,12 +42,8 @@ class ListWallpaperFragment : Fragment() {
         val recyclerView = binding.wallpaperRecyclerView
         recyclerView.adapter = adapter
         viewModel.checkFirstRun()
-        if (isPortraitMode()) {
-            recyclerView.layoutManager = GridLayoutManager(requireContext(), 3)
-        } else {
-            recyclerView.layoutManager = GridLayoutManager(requireContext(), 5)
-        }
-
+        val screenGrid = ScreenGrid(this.binding.root.context, 120F).calculate()
+        recyclerView.layoutManager = GridLayoutManager(this.binding.root.context, screenGrid)
         wallpaper.observe(viewLifecycleOwner) { item -> adapter.setData(item) }
 
         binding.topAppBar.setOnMenuItemClickListener { menuItem ->
@@ -79,11 +76,8 @@ class ListWallpaperFragment : Fragment() {
         _binding = null
     }
 
-    private fun isPortraitMode(): Boolean {
-        return when (resources.configuration.orientation) {
-            Configuration.ORIENTATION_PORTRAIT -> true
-            else -> false
-        }
-    }
+
+
+
 
 }
