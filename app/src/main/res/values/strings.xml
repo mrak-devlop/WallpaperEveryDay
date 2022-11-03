@@ -14,7 +14,10 @@
     <string name="subtitle">everyday</string>
     <string name="info">Info</string>
     <string name="dialog_title">Auto update</string>
-    <string name="dialog_supporting_text">Install new wallpaper every day</string>
-    <string name="dialog_cancel">Cancel</string>
-    <string name="dialog_accept">Accept</string>
+    <string name="dialog_supporting_text">Install new wallpaper every day?</string>
+    <string name="dialog_cancel">No</string>
+    <string name="dialog_accept">Yes</string>
+    <string name="wallpaper_transition_name">wallpaper_transition</string>
+    <string name="dialog_title_del">Auto delete</string>
+    <string name="dialog_supporting_text_del">Delete wallpapers older than a week?</string>
 </resources>

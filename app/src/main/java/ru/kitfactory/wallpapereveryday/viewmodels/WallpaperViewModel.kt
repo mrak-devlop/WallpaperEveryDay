@@ -5,10 +5,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import ru.kitfactory.wallpapereveryday.data.repository.WallpaperRepository
+import ru.kitfactory.wallpapereveryday.data.repository.WallpaperRepositoryImpl
 import ru.kitfactory.wallpapereveryday.utility.SetWallpaper
 
-class WallpaperViewModel(private val repository: WallpaperRepository,
+class WallpaperViewModel(private val repository: WallpaperRepositoryImpl,
                          private val setWallpaper: SetWallpaper
 ): ViewModel() {
     companion object {
@@ -56,6 +56,9 @@ class WallpaperViewModel(private val repository: WallpaperRepository,
     }
     fun setAutoUpdate() {
         repository.addPreferences(UPDATE_WALLPAPER, "true")
+    }
+    fun removeAutoUpdate() {
+        repository.addPreferences(UPDATE_WALLPAPER, "false")
     }
 
 }

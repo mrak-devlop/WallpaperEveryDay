@@ -12,30 +12,31 @@ import ru.kitfactory.wallpapereveryday.data.network.BingNetwork
 import ru.kitfactory.wallpapereveryday.data.network.NetDataTransfer
 import ru.kitfactory.wallpapereveryday.data.storage.PreferencesStorage
 import ru.kitfactory.wallpapereveryday.domain.Wallpaper
+import ru.kitfactory.wallpapereveryday.domain.WallpaperRepository
 
-class WallpaperRepository(private val database: LocalDatabase,
-                          private val preferences: PreferencesStorage) {
+class WallpaperRepositoryImpl(private val database: LocalDatabase,
+                              private val preferences: PreferencesStorage): WallpaperRepository {
 
-    val wallpapers: LiveData<List<Wallpaper>> = Transformations.map(
+    override val wallpapers: LiveData<List<Wallpaper>> = Transformations.map(
         database.daoDatabase.getWallpapers()
     ) {
         it.asDomainModel()
     }
 
-    suspend fun removeWallpaper(wallpaper: Wallpaper){
+    override suspend fun removeWallpaper(wallpaper: Wallpaper){
         val databaseModel = domainModelToDatabaseModel(wallpaper)
         database.daoDatabase.removeWallpaper(databaseModel)
 
     }
 
-    suspend fun getListWallpaper(): List<Wallpaper> {
+    override suspend fun getListWallpaper(): List<Wallpaper> {
         return database
             .daoDatabase
             .getListWallpaper()
             .asDomainModel()
     }
 
-    suspend fun addNewWallpaper(index: String) {
+    override suspend fun addNewWallpaper(index: String) {
         withContext(Dispatchers.IO) {
             val newWallpaper = BingNetwork.bing.fetchBingItem(
                 "?resolution=1920" +
@@ -50,16 +51,16 @@ class WallpaperRepository(private val database: LocalDatabase,
         }
     }
 
-    fun getPreferences(name: String): String {
+    override fun getPreferences(name: String): String {
             return preferences.getProperty(name)
     }
 
-    fun addPreferences(name: String, value: String){
+    override fun addPreferences(name: String, value: String){
         preferences.addProperty(name, value)
     }
 
 
-    fun getLastWallpaper(startDate: String): Wallpaper {
+    override fun getLastWallpaper(startDate: String): Wallpaper {
         val dbWallpaper = database.daoDatabase.getLastWallpaper(startDate)
         return dbWallpaperToDomainModel(dbWallpaper)
     }
@@ -75,7 +76,7 @@ class WallpaperRepository(private val database: LocalDatabase,
 
     }
 
-    fun domainModelToDatabaseModel(wallpaper: Wallpaper): LocalDbWallpaper {
+    private fun domainModelToDatabaseModel(wallpaper: Wallpaper): LocalDbWallpaper {
         return LocalDbWallpaper(
             copyright = wallpaper.copyright,
             copyrightLink = wallpaper.copyrightLink,

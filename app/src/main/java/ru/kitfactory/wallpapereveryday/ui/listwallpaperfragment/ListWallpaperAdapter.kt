@@ -48,12 +48,12 @@ class ListWallpaperAdapter : RecyclerView.Adapter<ListWallpaperAdapter.ViewHolde
             .transition(withCrossFade())
             .into(image)
         image.setOnClickListener {
-//            val extras = FragmentNavigatorExtras(
-//                 to "shared_element_container"
-//            )
+            val extras = FragmentNavigatorExtras(
+                image to "wallpaper_transition"
+            )
             val directions = ListWallpaperFragmentDirections
                 .actionListWallpaperFragmentToWallpaperFragment(wallpaper)
-            holder.itemView.findNavController().navigate(directions)
+            holder.itemView.findNavController().navigate(directions, extras)
         }
     }
 

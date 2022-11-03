@@ -17,6 +17,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.transition.MaterialContainerTransform
+import com.google.android.material.transition.MaterialFadeThrough
 import ru.kitfactory.wallpapereveryday.App
 import ru.kitfactory.wallpapereveryday.R
 import ru.kitfactory.wallpapereveryday.databinding.FragmentWallpaperBinding
@@ -39,7 +40,6 @@ class WallpaperFragment : Fragment() {
     private var _binding: FragmentWallpaperBinding? = null
     private val binding get() = _binding!!
     private var isAllFabsVisible = false
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -127,7 +127,9 @@ class WallpaperFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         injectDagger()
-        sharedElementEnterTransition= MaterialContainerTransform()
+        sharedElementEnterTransition = MaterialContainerTransform()
+        enterTransition = MaterialFadeThrough()
+
     }
 
 
@@ -154,7 +156,7 @@ class WallpaperFragment : Fragment() {
             .setTitle(resources.getString(R.string.dialog_title))
             .setMessage(resources.getString(R.string.dialog_supporting_text))
             .setNeutralButton(resources.getString(R.string.dialog_cancel)) { dialog, which ->
-                // Respond to cancel button press
+                viewModel.removeAutoUpdate()
             }
             .setPositiveButton(resources.getString(R.string.dialog_accept)) { dialog, which ->
                 viewModel.setAutoUpdate()

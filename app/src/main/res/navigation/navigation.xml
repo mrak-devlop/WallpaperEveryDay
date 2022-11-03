@@ -12,11 +12,11 @@
         <action
             android:id="@+id/action_listWallpaperFragment_to_wallpaperFragment"
             app:destination="@id/wallpaperFragment"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="false" />
         <action
             android:id="@+id/action_listWallpaperFragment_to_settingsFragment"
             app:destination="@id/settingsFragment"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/wallpaperFragment"

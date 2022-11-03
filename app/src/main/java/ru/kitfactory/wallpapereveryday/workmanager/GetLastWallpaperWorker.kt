@@ -10,16 +10,18 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import ru.kitfactory.wallpapereveryday.data.repository.WallpaperRepository
+import ru.kitfactory.wallpapereveryday.data.repository.WallpaperRepositoryImpl
 import ru.kitfactory.wallpapereveryday.utility.SetWallpaper
+import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.*
 
 
 class GetLastWallpaperWorker @AssistedInject constructor(
     @Assisted private val context: Context,
     @Assisted private val workerParams: WorkerParameters,
-    private val repository: WallpaperRepository,
+    private val repository: WallpaperRepositoryImpl,
 ) : CoroutineWorker(context, workerParams) {
     companion object {
         const val LAST_WALLPAPER = "0"
@@ -70,7 +72,18 @@ class GetLastWallpaperWorker @AssistedInject constructor(
 
                 val deletePrefs = repository.getPreferences(DELETE_OLD).toBoolean()
                 if (deletePrefs) {
-                    DeleteOldImage(repository).execute()
+                    //DeleteOldImage(repository).execute()
+                    val inFormat = SimpleDateFormat("dd.MM.uu", Locale.US)
+                    val lastWallpaper = repository.getLastWallpaper("6")
+                    val lastWallpaperDate = lastWallpaper.startDate
+                    val lastWeekWallpaperDate = inFormat.parse(lastWallpaperDate) as Date
+                    val wallpapers = repository.getListWallpaper()
+                    for (count in wallpapers) {
+                        val currentWallpaperDate = inFormat.parse(count.startDate) as Date
+                        if (lastWeekWallpaperDate < currentWallpaperDate){
+                            repository.removeWallpaper(count)
+                        }
+                    }
                 }
 
                 Log.i("wallpaper_debug", "Success")

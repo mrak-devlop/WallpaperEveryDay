@@ -1,9 +1,9 @@
 package ru.kitfactory.wallpapereveryday.viewmodels
 
 import androidx.lifecycle.ViewModel
-import ru.kitfactory.wallpapereveryday.data.repository.WallpaperRepository
+import ru.kitfactory.wallpapereveryday.data.repository.WallpaperRepositoryImpl
 
-class SettingsViewModel(private val repository: WallpaperRepository): ViewModel() {
+class SettingsViewModel(private val repository: WallpaperRepositoryImpl): ViewModel() {
 
     companion object {
         private const val UPDATE_WALLPAPER = "UPDATE_WALLPAPER"

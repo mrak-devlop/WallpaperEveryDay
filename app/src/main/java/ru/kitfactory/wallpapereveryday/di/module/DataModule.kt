@@ -1,12 +1,11 @@
 package ru.kitfactory.wallpapereveryday.di.module
 
 import android.app.Application
-import android.content.Context
 import androidx.room.Room
 import dagger.Module
 import dagger.Provides
 import ru.kitfactory.wallpapereveryday.data.database.LocalDatabase
-import ru.kitfactory.wallpapereveryday.data.repository.WallpaperRepository
+import ru.kitfactory.wallpapereveryday.data.repository.WallpaperRepositoryImpl
 import ru.kitfactory.wallpapereveryday.data.storage.PreferencesStorage
 import javax.inject.Singleton
 
@@ -32,8 +31,8 @@ class DataModule() {
     @Provides
     fun provideWallpaperRepository(database: LocalDatabase,
                                    preferencesStorage: PreferencesStorage
-    ): WallpaperRepository {
-        return WallpaperRepository(database = database, preferences = preferencesStorage)
+    ): WallpaperRepositoryImpl {
+        return WallpaperRepositoryImpl(database = database, preferences = preferencesStorage)
     }
 
     @Singleton

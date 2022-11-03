@@ -2,13 +2,17 @@ package ru.kitfactory.wallpapereveryday.ui.listwallpaperfragment
 
 import android.content.Context
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.transition.Hold
+import com.google.android.material.transition.MaterialFadeThrough
 import ru.kitfactory.wallpapereveryday.App
 import ru.kitfactory.wallpapereveryday.R
 import ru.kitfactory.wallpapereveryday.data.storage.PreferencesStorage
@@ -17,6 +21,7 @@ import ru.kitfactory.wallpapereveryday.di.factory.ViewModelFactory
 import ru.kitfactory.wallpapereveryday.utility.ScreenGrid
 import ru.kitfactory.wallpapereveryday.viewmodels.ListWallpaperViewModel
 import javax.inject.Inject
+
 
 class ListWallpaperFragment : Fragment() {
 
@@ -31,6 +36,8 @@ class ListWallpaperFragment : Fragment() {
     @Inject
     lateinit var storage: PreferencesStorage
 
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,7 +48,9 @@ class ListWallpaperFragment : Fragment() {
         val adapter = ListWallpaperAdapter()
         val recyclerView = binding.wallpaperRecyclerView
         recyclerView.adapter = adapter
-        viewModel.checkFirstRun()
+        if(viewModel.checkFirstRun()){
+            autoDeleteDialog(binding.root.context)
+        }
         val screenGrid = ScreenGrid(this.binding.root.context, 120F).calculate()
         recyclerView.layoutManager = GridLayoutManager(this.binding.root.context, screenGrid)
         wallpaper.observe(viewLifecycleOwner) { item -> adapter.setData(item) }
@@ -63,6 +72,20 @@ class ListWallpaperFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         injectDagger()
+        exitTransition = MaterialFadeThrough()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val viewGroup = view.parent as ViewGroup
+        viewGroup
+            .viewTreeObserver
+            .addOnPreDrawListener {
+                startPostponedEnterTransition()
+                true
+            }
+
+        super.onViewCreated(view, savedInstanceState)
+
     }
 
 
@@ -70,14 +93,25 @@ class ListWallpaperFragment : Fragment() {
         App.instance.appComponent.inject(this)
     }
 
+
     override fun onDestroyView() {
         super.onDestroyView()
         Glide.get(this.binding.root.context).clearMemory()
         _binding = null
     }
 
-
-
+    private fun autoDeleteDialog (context: Context) {
+        MaterialAlertDialogBuilder(context)
+            .setTitle(resources.getString(R.string.dialog_title_del))
+            .setMessage(resources.getString(R.string.dialog_supporting_text_del))
+            .setNeutralButton(resources.getString(R.string.dialog_cancel)) { dialog, which ->
+                viewModel.setAutoDelete(false)
+            }
+            .setPositiveButton(resources.getString(R.string.dialog_accept)) { dialog, which ->
+                viewModel.setAutoDelete(true)
+            }
+            .show()
+    }
 
 
 }
