@@ -6,9 +6,10 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.kitfactory.wallpapereveryday.data.repository.WallpaperRepositoryImpl
+import ru.kitfactory.wallpapereveryday.domain.WallpaperRepository
 import ru.kitfactory.wallpapereveryday.utility.SetWallpaper
 
-class WallpaperViewModel(private val repository: WallpaperRepositoryImpl,
+class WallpaperViewModel(private val repository: WallpaperRepository,
                          private val setWallpaper: SetWallpaper
 ): ViewModel() {
     companion object {

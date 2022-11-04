@@ -1,9 +1,12 @@
 package ru.kitfactory.wallpapereveryday.viewmodels
 
 import androidx.lifecycle.ViewModel
-import ru.kitfactory.wallpapereveryday.data.repository.WallpaperRepositoryImpl
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
+import ru.kitfactory.wallpapereveryday.domain.WallpaperRepository
+import ru.kitfactory.wallpapereveryday.workmanager.DeleteOldImage
 
-class SettingsViewModel(private val repository: WallpaperRepositoryImpl): ViewModel() {
+class SettingsViewModel(private val repository: WallpaperRepository): ViewModel() {
 
     companion object {
         private const val UPDATE_WALLPAPER = "UPDATE_WALLPAPER"
@@ -45,4 +48,13 @@ class SettingsViewModel(private val repository: WallpaperRepositoryImpl): ViewMo
         return result.toBoolean()
     }
 
-}
+    fun deleteOld() {
+        viewModelScope.launch {
+            DeleteOldImage(repository).execute()
+        }
+    }
+    }
+
+
+
+

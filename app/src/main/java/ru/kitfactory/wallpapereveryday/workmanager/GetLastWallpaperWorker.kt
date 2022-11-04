@@ -12,10 +12,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import ru.kitfactory.wallpapereveryday.data.repository.WallpaperRepositoryImpl
 import ru.kitfactory.wallpapereveryday.utility.SetWallpaper
-import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.*
 
 
 class GetLastWallpaperWorker @AssistedInject constructor(
@@ -72,18 +70,7 @@ class GetLastWallpaperWorker @AssistedInject constructor(
 
                 val deletePrefs = repository.getPreferences(DELETE_OLD).toBoolean()
                 if (deletePrefs) {
-                    //DeleteOldImage(repository).execute()
-                    val inFormat = SimpleDateFormat("dd.MM.uu", Locale.US)
-                    val lastWallpaper = repository.getLastWallpaper("6")
-                    val lastWallpaperDate = lastWallpaper.startDate
-                    val lastWeekWallpaperDate = inFormat.parse(lastWallpaperDate) as Date
-                    val wallpapers = repository.getListWallpaper()
-                    for (count in wallpapers) {
-                        val currentWallpaperDate = inFormat.parse(count.startDate) as Date
-                        if (lastWeekWallpaperDate < currentWallpaperDate){
-                            repository.removeWallpaper(count)
-                        }
-                    }
+                    DeleteOldImage(repository).execute()
                 }
 
                 Log.i("wallpaper_debug", "Success")

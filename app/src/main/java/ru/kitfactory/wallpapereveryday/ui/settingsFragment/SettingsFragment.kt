@@ -43,6 +43,10 @@ class SettingsFragment : Fragment() {
         binding.delateWallpaperSwitch.setOnCheckedChangeListener{buttonView, isChecked ->
             viewModel.setDeleteOldWallpaperSettings(buttonView.isChecked)
         }
+
+        binding.clearCacheButton.setOnClickListener {
+            viewModel.deleteOld()
+        }
         return view
     }
 

@@ -7,6 +7,7 @@ import dagger.Provides
 import ru.kitfactory.wallpapereveryday.data.database.LocalDatabase
 import ru.kitfactory.wallpapereveryday.data.repository.WallpaperRepositoryImpl
 import ru.kitfactory.wallpapereveryday.data.storage.PreferencesStorage
+import ru.kitfactory.wallpapereveryday.domain.WallpaperRepository
 import javax.inject.Singleton
 
 @Module

@@ -20,4 +20,5 @@
     <string name="wallpaper_transition_name">wallpaper_transition</string>
     <string name="dialog_title_del">Auto delete</string>
     <string name="dialog_supporting_text_del">Delete wallpapers older than a week?</string>
+    <string name="del_cache">Clear cache</string>
 </resources>

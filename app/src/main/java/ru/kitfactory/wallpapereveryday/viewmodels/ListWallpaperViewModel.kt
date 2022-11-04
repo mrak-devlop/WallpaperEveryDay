@@ -5,10 +5,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import ru.kitfactory.wallpapereveryday.data.repository.WallpaperRepositoryImpl
 import ru.kitfactory.wallpapereveryday.domain.Wallpaper
+import ru.kitfactory.wallpapereveryday.domain.WallpaperRepository
 
-class ListWallpaperViewModel(private val repository: WallpaperRepositoryImpl) : ViewModel() {
+class ListWallpaperViewModel(private val repository: WallpaperRepository) : ViewModel() {
     companion object{
         private const val UPDATE_WALLPAPER = "UPDATE_WALLPAPER"
         private const val DELETE_OLD = "DELETE_OLD"
