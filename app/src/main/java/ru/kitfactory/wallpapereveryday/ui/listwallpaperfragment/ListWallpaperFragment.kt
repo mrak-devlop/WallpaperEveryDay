@@ -1,6 +1,7 @@
 package ru.kitfactory.wallpapereveryday.ui.listwallpaperfragment
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +13,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.transition.Hold
+import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.MaterialFadeThrough
+import com.google.android.material.transition.platform.MaterialArcMotion
 import ru.kitfactory.wallpapereveryday.App
 import ru.kitfactory.wallpapereveryday.R
 import ru.kitfactory.wallpapereveryday.data.storage.PreferencesStorage
@@ -72,7 +75,11 @@ class ListWallpaperFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         injectDagger()
-        exitTransition = MaterialFadeThrough()
+        exitTransition = MaterialContainerTransform().apply{
+            MaterialArcMotion()
+            duration = 550
+            scrimColor = Color.TRANSPARENT
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
