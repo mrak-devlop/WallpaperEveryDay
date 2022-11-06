@@ -7,6 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.kitfactory.wallpapereveryday.domain.Wallpaper
 import ru.kitfactory.wallpapereveryday.domain.WallpaperRepository
+import ru.kitfactory.wallpapereveryday.utility.InternetConnection
 
 class ListWallpaperViewModel(private val repository: WallpaperRepository) : ViewModel() {
     companion object{
@@ -26,9 +27,9 @@ class ListWallpaperViewModel(private val repository: WallpaperRepository) : View
 
     }
 
-     fun checkFirstRun():Boolean {
+     fun checkFirstRun(internet: Boolean):Boolean {
              val state = repository.getPreferences(FIRST_RUN)
-         return if (state == "none") {
+         return if (state == "none" && internet) {
              repository.addPreferences(FIRST_RUN, "NO")
              repository.addPreferences(UPDATE_WALLPAPER, "true")
              loadWallpapersOnWeekInDb()

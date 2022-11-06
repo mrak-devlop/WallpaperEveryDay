@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.load.engine.Resource
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -147,8 +148,9 @@ class WallpaperFragment : Fragment() {
         }
 
         if (!InternetConnection(binding.root.context).checkInternet()){
+            val textMessage = binding.root.context.resources.getString(R.string.no_internet)
             Snackbar.make(requireActivity().findViewById(android.R.id.content),
-                "No Internet connection",
+                textMessage,
                 Snackbar.LENGTH_LONG)
                 .show()
         }

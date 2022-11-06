@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Wallpaper Every Day</string>
+    <string name="wallpaper">Обои</string>
+    <string name="apply_wallpaper">Применить обои</string>
+    <string name="apply_home">Применить обои для домашнего экрана</string>
+    <string name="apply_lockscreen">Применить обои для экрана блокировки</string>
+    <string name="apply_all">Применить обои везде</string>
+    <string name="page_title_list">Обои</string>
+    <string name="settings">Настройки</string>
+    <string name="autoinstall_wallpaper">Устанавливать новые обои каждый день</string>
+    <string name="autodelete_wallpaper">Удалять обои за прошедшую неделю</string>
+    <string name="subtitle">на каждый день</string>
+    <string name="info">Информация</string>
+    <string name="dialog_title">Автоматическое обновление</string>
+    <string name="dialog_supporting_text">Устанавливать новые обои каждый день?</string>
+    <string name="dialog_cancel">Нет</string>
+    <string name="dialog_accept">Да</string>
+    <string name="dialog_title_del">Автоматическое удаление</string>
+    <string name="dialog_supporting_text_del">Удалять обои за прошедшую неделю?</string>
+    <string name="del_cache">Очистить кеш</string>
+    <string name="no_internet">Нет соединения с интернетом</string>
+</resources>

@@ -13,9 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.transition.Hold
 import com.google.android.material.transition.MaterialContainerTransform
-import com.google.android.material.transition.MaterialFadeThrough
 import com.google.android.material.transition.platform.MaterialArcMotion
 import ru.kitfactory.wallpapereveryday.App
 import ru.kitfactory.wallpapereveryday.R
@@ -53,7 +51,7 @@ class ListWallpaperFragment : Fragment() {
         val adapter = ListWallpaperAdapter()
         val recyclerView = binding.wallpaperRecyclerView
         recyclerView.adapter = adapter
-        if(viewModel.checkFirstRun()){
+        if(viewModel.checkFirstRun(InternetConnection(binding.root.context).checkInternet())){
             autoDeleteDialog(binding.root.context)
         }
         val screenGrid = ScreenGrid(this.binding.root.context, 120F).calculate()
@@ -73,8 +71,9 @@ class ListWallpaperFragment : Fragment() {
         }
 
         if (!InternetConnection(binding.root.context).checkInternet()){
+            val textMessage = binding.root.context.resources.getString(R.string.no_internet)
             Snackbar.make(requireActivity().findViewById(android.R.id.content),
-                "No Internet connection",
+                textMessage,
                 Snackbar.LENGTH_LONG)
                 .show()
         }
