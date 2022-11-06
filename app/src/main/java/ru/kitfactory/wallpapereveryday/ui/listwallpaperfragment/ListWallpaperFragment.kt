@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.Hold
 import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.MaterialFadeThrough
@@ -21,6 +22,7 @@ import ru.kitfactory.wallpapereveryday.R
 import ru.kitfactory.wallpapereveryday.data.storage.PreferencesStorage
 import ru.kitfactory.wallpapereveryday.databinding.FragmentListWallpaperBinding
 import ru.kitfactory.wallpapereveryday.di.factory.ViewModelFactory
+import ru.kitfactory.wallpapereveryday.utility.InternetConnection
 import ru.kitfactory.wallpapereveryday.utility.ScreenGrid
 import ru.kitfactory.wallpapereveryday.viewmodels.ListWallpaperViewModel
 import javax.inject.Inject
@@ -69,6 +71,14 @@ class ListWallpaperFragment : Fragment() {
                 else -> false
             }
         }
+
+        if (!InternetConnection(binding.root.context).checkInternet()){
+            Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                "No Internet connection",
+                Snackbar.LENGTH_LONG)
+                .show()
+        }
+
         return view
     }
 

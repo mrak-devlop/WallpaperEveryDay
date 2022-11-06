@@ -120,13 +120,14 @@
                 app:menu="@menu/top_app_bar_wallpaper"
                 app:navigationIconTint="@color/white" />
 
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/linerProgessBarWallpaper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:indeterminate="true" />
 
         </com.google.android.material.appbar.AppBarLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,6 +3,7 @@ package ru.kitfactory.wallpapereveryday.ui.wallpaperfragment
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,15 +14,20 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.RequestListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.MaterialFadeThrough
 import ru.kitfactory.wallpapereveryday.App
 import ru.kitfactory.wallpapereveryday.R
 import ru.kitfactory.wallpapereveryday.databinding.FragmentWallpaperBinding
 import ru.kitfactory.wallpapereveryday.di.factory.ViewModelFactory
+import ru.kitfactory.wallpapereveryday.utility.InternetConnection
 import ru.kitfactory.wallpapereveryday.utility.SetWallpaper
 import ru.kitfactory.wallpapereveryday.viewmodels.WallpaperViewModel
 import javax.inject.Inject
@@ -67,19 +73,38 @@ class WallpaperFragment : Fragment() {
 
         val wallpaper = wallpaperFromArgs.selectedWallpaper
         binding.topAppBarWallpaper.title = wallpaper.startDate
+        val progressBar = binding.linerProgessBarWallpaper
         Glide
             .with(view)
             .load(wallpaper.url)
+            .listener(object : RequestListener<Drawable> {
+                override fun onResourceReady(
+                    resource: Drawable?,
+                    model: Any?,
+                    target: com.bumptech.glide.request.target.Target<Drawable>?,
+                    dataSource: DataSource?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    progressBar.visibility = View.GONE
+                    return false
+                }
+
+                override fun onLoadFailed(
+                    e: GlideException?, model: Any?,
+                    target: com.bumptech.glide.request.target.Target<Drawable>?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    progressBar.visibility = View.GONE
+                    return false
+                }
+            })
             .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
             .centerCrop()
             .placeholder(ColorDrawable(Color.BLACK))
             .transition(DrawableTransitionOptions.withCrossFade())
             .into(image)
-
         val copyright = binding.copyrightView
-
         copyright.text = wallpaper.copyright
-
         val fabApply = binding.fabApply
         val applyHomeFab = binding.applyHomeFab
         val applyLockscreenFab = binding.applyLockscreenFab
@@ -121,6 +146,13 @@ class WallpaperFragment : Fragment() {
             viewModel.setWallpaperForHomeScreen(bitmap)
         }
 
+        if (!InternetConnection(binding.root.context).checkInternet()){
+            Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                "No Internet connection",
+                Snackbar.LENGTH_LONG)
+                .show()
+        }
+        
         return view
     }
 
