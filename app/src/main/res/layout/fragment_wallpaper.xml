@@ -8,7 +8,6 @@
     tools:context=".ui.wallpaperfragment.WallpaperFragment">
 
 
-
     <ImageView
         android:id="@+id/imageWallpaper"
         android:layout_width="0dp"
@@ -16,11 +15,12 @@
         android:contentDescription="@string/wallpaper"
         android:fitsSystemWindows="true"
         android:src="@drawable/th"
+        android:transitionName="@string/wallpaper_transition_name"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:transitionName="@string/wallpaper_transition_name"/>
+        tools:ignore="ImageContrastCheck" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_apply"
@@ -42,13 +42,11 @@
         android:contentDescription="@string/apply_home"
         android:text="@string/apply_home"
         app:fabSize="normal"
+        app:hideMotionSpec="@anim/fab_hide_motion_spec"
         app:icon="@drawable/ic_baseline_mobile_screen_share_24"
         app:layout_constraintBottom_toTopOf="@+id/fab_apply"
         app:layout_constraintEnd_toEndOf="@+id/fab_apply"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/fab_apply"
-        app:showMotionSpec="@anim/fab_show_motion_spec"
-        app:hideMotionSpec="@anim/fab_hide_motion_spec"/>
+        app:showMotionSpec="@anim/fab_show_motion_spec" />
 
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -59,12 +57,11 @@
         android:contentDescription="@string/apply_lockscreen"
         android:text="@string/apply_lockscreen"
         app:fabSize="normal"
+        app:hideMotionSpec="@anim/fab_hide_motion_spec"
         app:icon="@drawable/ic_baseline_mobile_screen_share_24"
         app:layout_constraintBottom_toTopOf="@+id/apply_home_fab"
         app:layout_constraintEnd_toEndOf="@+id/apply_home_fab"
-        app:layout_constraintStart_toStartOf="@+id/apply_home_fab"
-        app:showMotionSpec="@anim/fab_show_motion_spec"
-        app:hideMotionSpec="@anim/fab_hide_motion_spec"/>
+        app:showMotionSpec="@anim/fab_show_motion_spec" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/apply_all_fab"
@@ -74,12 +71,11 @@
         android:contentDescription="@string/apply_all"
         android:text="@string/apply_all"
         app:fabSize="normal"
+        app:hideMotionSpec="@anim/fab_hide_motion_spec"
         app:icon="@drawable/ic_baseline_offline_share_24"
         app:layout_constraintBottom_toTopOf="@+id/apply_lockscreen_fab"
         app:layout_constraintEnd_toEndOf="@+id/apply_lockscreen_fab"
-        app:layout_constraintStart_toStartOf="@+id/apply_lockscreen_fab"
-        app:showMotionSpec="@anim/fab_show_motion_spec"
-        app:hideMotionSpec="@anim/fab_hide_motion_spec"/>
+        app:showMotionSpec="@anim/fab_show_motion_spec" />
 
     <TextView
         android:id="@+id/copyrightView"

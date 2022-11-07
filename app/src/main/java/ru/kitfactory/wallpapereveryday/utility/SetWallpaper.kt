@@ -10,7 +10,8 @@ class SetWallpaper(context: Context) {
     private val manager = WallpaperManager.getInstance(context)
 
     suspend fun applyForAllScreen(bitmap: Bitmap) {
-        withContext(Dispatchers.IO) {
+        withContext(Dispatchers.IO)
+        {
             manager.setBitmap(bitmap)
         }
     }

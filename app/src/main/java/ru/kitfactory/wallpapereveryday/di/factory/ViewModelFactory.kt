@@ -3,7 +3,6 @@ package ru.kitfactory.wallpapereveryday.di.factory
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import ru.kitfactory.wallpapereveryday.data.repository.WallpaperRepositoryImpl
-import ru.kitfactory.wallpapereveryday.domain.WallpaperRepository
 import ru.kitfactory.wallpapereveryday.utility.SetWallpaper
 import ru.kitfactory.wallpapereveryday.viewmodels.ListWallpaperViewModel
 import ru.kitfactory.wallpapereveryday.viewmodels.SettingsViewModel

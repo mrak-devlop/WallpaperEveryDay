@@ -1,14 +1,9 @@
 package ru.kitfactory.wallpapereveryday.workmanager
 
 import android.util.Log
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.launch
-import ru.kitfactory.wallpapereveryday.data.repository.WallpaperRepositoryImpl
 import ru.kitfactory.wallpapereveryday.domain.WallpaperRepository
-import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-import java.util.*
 
 
 class DeleteOldImage(private val repository: WallpaperRepository) {

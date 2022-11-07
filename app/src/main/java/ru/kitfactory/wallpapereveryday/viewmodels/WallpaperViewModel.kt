@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import ru.kitfactory.wallpapereveryday.data.repository.WallpaperRepositoryImpl
 import ru.kitfactory.wallpapereveryday.domain.WallpaperRepository
 import ru.kitfactory.wallpapereveryday.utility.SetWallpaper
 

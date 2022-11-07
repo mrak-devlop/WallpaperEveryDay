@@ -3,9 +3,9 @@
     <string name="app_name">Wallpaper Every Day</string>
     <string name="wallpaper">Обои</string>
     <string name="apply_wallpaper">Применить обои</string>
-    <string name="apply_home">Применить обои для домашнего экрана</string>
-    <string name="apply_lockscreen">Применить обои для экрана блокировки</string>
-    <string name="apply_all">Применить обои везде</string>
+    <string name="apply_home">Применить для HomeScreen</string>
+    <string name="apply_lockscreen">Применить для LockScreen</string>
+    <string name="apply_all">Применить для всех экранов</string>
     <string name="page_title_list">Обои</string>
     <string name="settings">Настройки</string>
     <string name="autoinstall_wallpaper">Устанавливать новые обои каждый день</string>

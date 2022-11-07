@@ -42,10 +42,9 @@ class ListWallpaperAdapter : RecyclerView.Adapter<ListWallpaperAdapter.ViewHolde
     @SuppressLint("SuspiciousIndentation")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val wallpaper = listWallpaper[position]
-        val textDate = holder.binding.dateTextView
-        textDate.text = wallpaper.startDate
         val image = holder.binding.wallpaperImageView
         val progressBar: ProgressBar = holder.binding.progresBar
+        val textDate = holder.binding.dateTextView
         Glide
             .with(holder.binding.root)
             .load(wallpaper.url)
@@ -56,6 +55,7 @@ class ListWallpaperAdapter : RecyclerView.Adapter<ListWallpaperAdapter.ViewHolde
                                              dataSource: DataSource?,
                                              isFirstResource: Boolean): Boolean {
                     progressBar.visibility = View.GONE
+                    textDate.text = wallpaper.startDate
                     return false
                 }
 
@@ -63,6 +63,7 @@ class ListWallpaperAdapter : RecyclerView.Adapter<ListWallpaperAdapter.ViewHolde
                                           target: com.bumptech.glide.request.target.Target<Drawable>?,
                                           isFirstResource: Boolean): Boolean {
                     progressBar.visibility = View.GONE
+                    textDate.text = wallpaper.startDate
                     return false
                 }
             })
@@ -72,6 +73,8 @@ class ListWallpaperAdapter : RecyclerView.Adapter<ListWallpaperAdapter.ViewHolde
             .placeholder(ColorDrawable(Color.BLACK))
             .transition(withCrossFade())
             .into(image)
+
+
         image.setOnClickListener {
             val extras = FragmentNavigatorExtras(
                 image to "wallpaper_transition"

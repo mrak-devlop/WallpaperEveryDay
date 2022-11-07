@@ -7,7 +7,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.kitfactory.wallpapereveryday.domain.Wallpaper
 import ru.kitfactory.wallpapereveryday.domain.WallpaperRepository
-import ru.kitfactory.wallpapereveryday.utility.InternetConnection
 
 class ListWallpaperViewModel(private val repository: WallpaperRepository) : ViewModel() {
     companion object{
