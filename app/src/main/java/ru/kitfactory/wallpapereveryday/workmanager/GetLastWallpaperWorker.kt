@@ -1,7 +1,6 @@
 package ru.kitfactory.wallpapereveryday.workmanager
 
 import android.content.Context
-import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.bumptech.glide.Glide
@@ -46,7 +45,6 @@ class GetLastWallpaperWorker @AssistedInject constructor(
                     val installWallpaperSettings = repository.getPreferences(WORK_NAME).toBoolean()
                     if (installWallpaperSettings) {
 
-                        Log.i("wallpaper_debug", "Load Bitmap")
                         val bitmap = Glide
                             .with(context.applicationContext)
                             .asBitmap()
@@ -55,7 +53,6 @@ class GetLastWallpaperWorker @AssistedInject constructor(
                             .submit()
                             .get()
 
-                        Log.i("wallpaper_debug", "Run setWallpaper ")
                         when (repository.getPreferences(UPDATE_WALLPAPER_TYPE)) {
                             ALL_SCREEN -> SetWallpaper(context.applicationContext)
                                 .applyForAllScreen(bitmap)
@@ -73,10 +70,8 @@ class GetLastWallpaperWorker @AssistedInject constructor(
                     DeleteOldImage(repository).execute()
                 }
 
-                Log.i("wallpaper_debug", "Success")
                 Result.success()
             } catch (e: Exception) {
-                Log.i("wallpaper_debug", "Retry")
                 Result.retry()
             }
     }

@@ -1,6 +1,5 @@
 package ru.kitfactory.wallpapereveryday.workmanager
 
-import android.util.Log
 import ru.kitfactory.wallpapereveryday.domain.WallpaperRepository
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -21,7 +20,6 @@ class DeleteOldImage(private val repository: WallpaperRepository) {
                 }
             }
 
-        Log.i("wallpaper_debug", "DeleteOldImage")
     }
 
 }
