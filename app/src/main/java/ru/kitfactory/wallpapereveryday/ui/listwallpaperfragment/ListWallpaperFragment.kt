@@ -54,7 +54,7 @@ class ListWallpaperFragment : Fragment() {
         if(viewModel.checkFirstRun(InternetConnection(binding.root.context).checkInternet())){
             autoDeleteDialog(binding.root.context)
         }
-        val screenGrid = ScreenGrid(this.binding.root.context, 120F).calculate()
+        val screenGrid = ScreenGrid(this.binding.root.context, 150F).calculate()
         recyclerView.layoutManager = GridLayoutManager(this.binding.root.context, screenGrid)
         wallpaper.observe(viewLifecycleOwner) { item -> adapter.setData(item) }
 

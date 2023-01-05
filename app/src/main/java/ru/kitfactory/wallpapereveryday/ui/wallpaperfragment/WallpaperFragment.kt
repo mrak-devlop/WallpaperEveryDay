@@ -36,7 +36,6 @@ import javax.inject.Inject
 class WallpaperFragment : Fragment() {
     @Inject
     lateinit var setWallpaper: SetWallpaper
-
     @Inject
     lateinit var vmFactory: ViewModelFactory
     private val viewModel: WallpaperViewModel by lazy {
